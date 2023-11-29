@@ -8,6 +8,26 @@
   font-size: 14px;
 }
 
+.button {
+  position: absolute;
+  top: 185px;
+  left: 800px;
+  background-color: rgb(100, 105, 105);
+  color: #ffffff;
+  width: 90px;
+  height: 35px;
+}
+
+.button2 {
+  position: absolute;
+  top: 185px;
+  left: 897px;
+  background-color: rgb(100, 105, 105);
+  color: #ffffff;
+  width: 90px;
+  height: 35px;
+}
+
 .simple-table {
   border-collapse: collapse;
   width: 101.5%;
@@ -85,4 +105,23 @@
   content: "";
   display: table;
   clear: both;
+}
+
+.login-main {
+  color: #ffffff;
+}
+
+.login-input1 {
+  margin: 5px;
+  margin-left: 41px;
+}
+
+.login-input2 {
+  margin: 5px;
+  margin-left: 10px;
+}
+
+.login-input3 {
+  margin: 5px;
+  margin-left: 14px;
 }

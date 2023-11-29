@@ -1,3 +1,5 @@
+import "../App.css";
+
 export default function Selector() {
   return (
     <div className="side-column" id="fileList">

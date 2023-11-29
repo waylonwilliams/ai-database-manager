@@ -1,17 +1,14 @@
 import "./App.css";
-import Table from "./components/table";
-import Selector from "./components/file";
+import Workbench from "./components/workbench";
+import Login from "./components/login";
+import { useState } from "react";
 
 export default function App() {
+  const [MySQLLogin, SetMySQLLogin] = useState<string>("");
   return (
-    <div className="row">
-      <div className="column left">
-        <textarea className="field" />
-        <Table />
-      </div>
-      <div className="column right">
-        <Selector />
-      </div>
-    </div>
+    <>
+      {MySQLLogin === "" && <Login SetMySQLLogin={SetMySQLLogin} />}
+      {MySQLLogin !== "" && <Workbench />}
+    </>
   );
 }
