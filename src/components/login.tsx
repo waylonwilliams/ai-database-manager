@@ -8,7 +8,7 @@ export default function Login({ SetMySQLLogin }: Props) {
   SetMySQLLogin(""); // accept user input and attempt to create an sql login? connect to db and such
 
   function attemptLogin() {
-    console.log("Login button pressed");
+    console.log("Login button pressed.");
   }
 
   return (
