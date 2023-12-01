@@ -10,8 +10,8 @@
 
 .button {
   position: absolute;
-  top: 185px;
-  left: 800px;
+  top: 11.5rem;
+  left: 26.75em;
   background-color: rgb(100, 105, 105);
   color: #ffffff;
   width: 90px;
@@ -20,8 +20,8 @@
 
 .button2 {
   position: absolute;
-  top: 185px;
-  left: 897px;
+  top: 11.5rem;
+  left: 33.75em;
   background-color: rgb(100, 105, 105);
   color: #ffffff;
   width: 90px;

@@ -105,6 +105,13 @@ function useLoading() {
   }
 }
 
+
+// var mysql = require('mysql');
+// contextBridge.exposeInMainWorld('mysql', require('mysql'));
+
+
+
+
 // ----------------------------------------------------------------------
 
 const { appendLoading, removeLoading } = useLoading()

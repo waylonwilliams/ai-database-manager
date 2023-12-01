@@ -1,7 +1,6 @@
 import "../App.css";
 
 export default function Editor() {
-  // add buttons?
   return (
     <>
       <button className="button">Execute</button>
