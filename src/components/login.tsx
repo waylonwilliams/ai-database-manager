@@ -7,6 +7,10 @@ interface Props {
 export default function Login({ SetMySQLLogin }: Props) {
   SetMySQLLogin(""); // accept user input and attempt to create an sql login? connect to db and such
 
+  function attemptLogin() {
+    console.log("Login button pressed");
+  }
+
   return (
     <div className="login-main">
       <h1>Connect to your database</h1>
@@ -16,7 +20,7 @@ export default function Login({ SetMySQLLogin }: Props) {
       <input type="text" id="host" className="login-input2" /> <br />
       <label htmlFor="host">Password:</label>
       <input type="text" id="host" className="login-input3" /> <br />
-      <button>Connect</button>
+      <button onClick={attemptLogin}>Connect</button>
     </div>
   );
 }
