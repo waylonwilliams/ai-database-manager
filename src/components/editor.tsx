@@ -1,12 +1,11 @@
 import { useState } from "react";
 import "../App.css";
 
-export default function Editor({ MySQLLogin }) {
+export default function Editor() {
   const [currentQuery, setCurrentQuery] = useState("");
 
   async function executeQuery() {
-    console.log(MySQLLogin);
-    // console.log(await mysql.queryAPI.makeQuery(MySQLLogin, currentQuery));
+    console.log(await mysql.queryAPI.makeQuery(currentQuery));
   }
 
   return (

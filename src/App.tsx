@@ -4,11 +4,11 @@ import Login from "./components/login";
 import { useState } from "react";
 
 export default function App() {
-  const [MySQLLogin, SetMySQLLogin] = useState(""); // how to type this?
+  const [MySQLLogin, SetMySQLLogin] = useState<boolean>(false); // how to type this?
   return (
     <>
-      {MySQLLogin === "" && <Login SetMySQLLogin={SetMySQLLogin} />}
-      {MySQLLogin !== "" && <Workbench MySQLLogin={MySQLLogin} />}
+      {MySQLLogin === false && <Login SetMySQLLogin={SetMySQLLogin} />}
+      {MySQLLogin === true && <Workbench MySQLLogin={MySQLLogin} />}
     </>
   );
 }

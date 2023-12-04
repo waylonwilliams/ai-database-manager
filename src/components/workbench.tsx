@@ -3,11 +3,11 @@ import Table from "./table";
 import Selector from "./file";
 import Editor from "./editor";
 
-export default function Workbench({ MySQLLogin }) {
+export default function Workbench() {
   return (
     <div className="row">
       <div className="column left">
-        <Editor MySQLLogin={MySQLLogin} />
+        <Editor />
         <Table />
       </div>
       <div className="column right">

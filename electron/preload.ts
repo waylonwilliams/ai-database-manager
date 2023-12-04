@@ -6,35 +6,37 @@ import * as mysql from 'mysql2';
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
 
 // -----------------------------------------------------------------
+var mysqlConnector: any = null;
 
 contextBridge.exposeInMainWorld('mysql', {
   connectAPI: {
     connect(host: string, user: string, pass: string) {
       return new Promise((resolve) => {
-        var mysqlConnector = mysql.createConnection({
+        mysqlConnector = mysql.createConnection({
           host: host,
           user: user,
           password: pass
         });
-
-        mysqlConnector.connect(function(err) {
+        mysqlConnector.connect(function(err: Error) {
           if (err) {
             console.log("failed to connect");
             resolve(null);
           } else {
-            // console.log("connected");
             console.log(mysqlConnector);
             resolve(mysqlConnector);
-          }
+          } // I am considering not returning anything, just establishing and leaving the connection on the backend
         });
       });
     }
   },
-  queryAPI: {
-    makeQuery(connector, query: string) {
+  queryAPI: { // You can only make 1 line of query at a time
+    // I need to handle mutli lines by looping through the string split at the semicolons
+    makeQuery(query: string) {
       return new Promise((resolve) => {
-        connector.query(query, function (err, result) {
+        if (mysqlConnector !== null) {
+        mysqlConnector.query(query, function (err: Error, result: any) {
           if (err) {
+            console.log(err);
             console.log("Failed query");
             return resolve(null);
           } else {
@@ -42,6 +44,15 @@ contextBridge.exposeInMainWorld('mysql', {
             return resolve(result);
           }
         })
+      }
+      })
+    }
+  },
+  dbAPI: {
+    setDB(dbName: string) {
+      return new Promise((resolve) => {
+        // execute USE %s on dbName and return true or false to indicate error
+        resolve(dbName);
       })
     }
   }

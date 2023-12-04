@@ -1,7 +1,11 @@
 import { useState } from "react";
 import "../App.css";
 
-export default function Login({ SetMySQLLogin }) {
+interface Props {
+  SetMySQLLogin: (val: boolean) => void;
+}
+
+export default function Login({ SetMySQLLogin }: Props) {
   const [host, setHost] = useState("");
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -9,9 +13,9 @@ export default function Login({ SetMySQLLogin }) {
   async function attemptLogin() {
     const result = await mysql.connectAPI.connect(host, user, pass);
     if (result != null) {
-      // console.log("Should set mysqllogin state");
+      // am I sure this is what returns on failure
       console.log(result);
-      SetMySQLLogin(result);
+      SetMySQLLogin(true);
     } else {
       console.log("returned null");
       // raise an incorrect login toast or sum
