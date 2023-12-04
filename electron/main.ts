@@ -22,6 +22,7 @@ function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -40,14 +41,10 @@ function createWindow() {
   }
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// changed to quit whenever window closed, personal preference
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
     app.quit()
     win = null
-  }
 })
 
 app.on('activate', () => {

@@ -1,7 +1,44 @@
+// creating connector is causing issues
+
+//  var mysqlConnector = mysql.createConnection({
+//    host: "localhost",
+//    user: "root",
+//    password: "hahahddd%55^jjd9"
+// });
+
+// console.log(mysqlConnector);
+
+// mysqlConnector.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
+
 import { contextBridge, ipcRenderer } from 'electron'
+import * as mysql from 'mysql';
+
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+
+contextBridge.exposeInMainWorld('mysql', {
+  connectAPI: {
+    connect(host: string, user: string, password: string) {
+      var mysqlConnector = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "hahahddd%55^jjd9"
+      });
+      mysqlConnector.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+      });
+      console.log(mysqlConnector)
+      console.log(host);
+      console.log(user);
+      console.log(password);
+    }
+  }
+})
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
@@ -104,13 +141,6 @@ function useLoading() {
     },
   }
 }
-
-
-// var mysql = require('mysql');
-// contextBridge.exposeInMainWorld('mysql', require('mysql'));
-
-
-
 
 // ----------------------------------------------------------------------
 

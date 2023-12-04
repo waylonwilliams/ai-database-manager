@@ -9,19 +9,7 @@ export default function Login({ SetMySQLLogin }: Props) {
   SetMySQLLogin("");
 
   function attemptLogin() {
-    //   var attemptedConnector = window.mysql.createConnection({
-    //     host: "localhost",
-    //     user: "root",
-    //     password: "hahahddd%55^jjd9",
-    //   });
-    //   attemptedConnector.connect(function (err: Error) {
-    //     if (err) {
-    //       console.error("Error connecting to MySQL: " + err.stack);
-    //       return; // say incorrect login somewhere
-    //     }
-    //     console.log("Connected to MySQL as id " + attemptedConnector.threadId);
-    //     SetMySQLLogin(attemptedConnector); // should now route to home page
-    //   });
+    mysql.connectAPI.connect("host", "user", "password");
   }
 
   return (
