@@ -1,11 +1,7 @@
 import { useState } from "react";
 import "../App.css";
 
-interface Props {
-  SetMySQLLogin: (value: string) => void;
-}
-
-export default function Login({ SetMySQLLogin }: Props) {
+export default function Login({ SetMySQLLogin }) {
   const [host, setHost] = useState("");
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -13,7 +9,8 @@ export default function Login({ SetMySQLLogin }: Props) {
   async function attemptLogin() {
     const result = await mysql.connectAPI.connect(host, user, pass);
     if (result != null) {
-      console.log("Should set mysqllogin state");
+      // console.log("Should set mysqllogin state");
+      console.log(result);
       SetMySQLLogin(result);
     } else {
       console.log("returned null");

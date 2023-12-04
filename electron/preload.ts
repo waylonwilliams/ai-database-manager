@@ -1,24 +1,11 @@
-// creating connector is causing issues
-
-//  var mysqlConnector = mysql.createConnection({
-//    host: "localhost",
-//    user: "root",
-//    password: "hahahddd%55^jjd9"
-// });
-
-// console.log(mysqlConnector);
-
-// mysqlConnector.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
-
 import { contextBridge, ipcRenderer } from 'electron'
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+
+// -----------------------------------------------------------------
 
 contextBridge.exposeInMainWorld('mysql', {
   connectAPI: {
@@ -33,17 +20,18 @@ contextBridge.exposeInMainWorld('mysql', {
         mysqlConnector.connect(function(err) {
           if (err) {
             console.log("failed to connect");
-            resolve(null);  // Reject with the error in case of connection failure
+            resolve(null);
           } else {
-            console.log("connected");
-            resolve(mysqlConnector);  // Resolve with mysqlConnector on successful connection
+            // console.log("connected");
+            console.log(mysqlConnector);
+            resolve(mysqlConnector);
           }
         });
       });
     }
   },
   queryAPI: {
-    query(connector, query: string) {
+    makeQuery(connector, query: string) {
       return new Promise((resolve) => {
         connector.query(query, function (err, result) {
           if (err) {
@@ -59,6 +47,7 @@ contextBridge.exposeInMainWorld('mysql', {
   }
 });
 
+// -----------------------------------------------------------------
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {

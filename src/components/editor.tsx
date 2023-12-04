@@ -2,10 +2,11 @@ import { useState } from "react";
 import "../App.css";
 
 export default function Editor({ MySQLLogin }) {
-  const [query, setQuery] = useState("");
+  const [currentQuery, setCurrentQuery] = useState("");
 
   async function executeQuery() {
-    console.log(await mysql.queryAPI.query(MySQLLogin, query));
+    console.log(MySQLLogin);
+    // console.log(await mysql.queryAPI.makeQuery(MySQLLogin, currentQuery));
   }
 
   return (
@@ -16,9 +17,9 @@ export default function Editor({ MySQLLogin }) {
       <button className="button2">GPT</button>
       <textarea
         className="field"
-        value={query}
+        value={currentQuery}
         onChange={(val) => {
-          setQuery(val.target.value);
+          setCurrentQuery(val.target.value);
         }}
       />
     </>
