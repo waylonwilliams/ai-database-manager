@@ -6,14 +6,6 @@ export default function Table() {
     { id: 1, name: "John Doe", age: 25, meow: "999" },
     { id: 2, name: "Jane Doe", age: 30, meow: "999" },
     { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
   ];
 
   return (

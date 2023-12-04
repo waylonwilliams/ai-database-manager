@@ -8,7 +8,7 @@ export default function App() {
   return (
     <>
       {MySQLLogin === "" && <Login SetMySQLLogin={SetMySQLLogin} />}
-      {MySQLLogin !== "" && <Workbench />}
+      {MySQLLogin !== "" && <Workbench MySQLLogin={MySQLLogin} />}
     </>
   );
 }

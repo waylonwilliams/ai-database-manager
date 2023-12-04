@@ -41,6 +41,21 @@ contextBridge.exposeInMainWorld('mysql', {
         });
       });
     }
+  },
+  queryAPI: {
+    query(connector, query: string) {
+      return new Promise((resolve) => {
+        connector.query(query, function (err, result) {
+          if (err) {
+            console.log("Failed query");
+            return resolve(null);
+          } else {
+            console.log(result);
+            return resolve(result);
+          }
+        })
+      })
+    }
   }
 });
 
