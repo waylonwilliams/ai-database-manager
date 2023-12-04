@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../App.css";
 
 interface Props {
@@ -5,22 +6,54 @@ interface Props {
 }
 
 export default function Login({ SetMySQLLogin }: Props) {
-  // var mysql = require("mysql");
-  SetMySQLLogin("");
+  const [host, setHost] = useState("");
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
 
-  function attemptLogin() {
-    mysql.connectAPI.connect("host", "user", "password");
+  async function attemptLogin() {
+    const result = await mysql.connectAPI.connect(host, user, pass);
+    if (result != null) {
+      console.log("Should set mysqllogin state");
+      SetMySQLLogin(result);
+    } else {
+      console.log("returned null");
+      // raise an incorrect login toast or sum
+    }
   }
 
   return (
     <div className="login-main">
       <h1>Connect to your database</h1>
-      <label htmlFor="host">Host: </label>
-      <input type="text" id="host" className="login-input1" /> <br />
-      <label htmlFor="host">Username:</label>
-      <input type="text" id="host" className="login-input2" /> <br />
-      <label htmlFor="host">Password:</label>
-      <input type="text" id="host" className="login-input3" /> <br />
+      Host:
+      <input
+        type="text"
+        className="login-input1"
+        value={host}
+        onChange={(val) => {
+          setHost(val.target.value);
+        }}
+      />{" "}
+      <br />
+      Username:
+      <input
+        type="text"
+        className="login-input2"
+        value={user}
+        onChange={(val) => {
+          setUser(val.target.value);
+        }}
+      />{" "}
+      <br />
+      Password:
+      <input
+        type="text"
+        className="login-input3"
+        value={pass}
+        onChange={(val) => {
+          setPass(val.target.value);
+        }}
+      />{" "}
+      <br />
       <button onClick={attemptLogin}>Connect</button>
     </div>
   );

@@ -22,23 +22,28 @@ contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
 
 contextBridge.exposeInMainWorld('mysql', {
   connectAPI: {
-    connect(host: string, user: string, password: string) {
-      var mysqlConnector = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "hahahddd%55^jjd9"
+    connect(host: string, user: string, pass: string) {
+      return new Promise((resolve) => {
+        var mysqlConnector = mysql.createConnection({
+          host: host,
+          user: user,
+          password: pass
+        });
+
+        mysqlConnector.connect(function(err) {
+          if (err) {
+            console.log("failed to connect");
+            resolve(null);  // Reject with the error in case of connection failure
+          } else {
+            console.log("connected");
+            resolve(mysqlConnector);  // Resolve with mysqlConnector on successful connection
+          }
+        });
       });
-      mysqlConnector.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-      });
-      console.log(mysqlConnector)
-      console.log(host);
-      console.log(user);
-      console.log(password);
     }
   }
-})
+});
+
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
