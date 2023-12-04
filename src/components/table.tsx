@@ -1,12 +1,35 @@
 import "../App.css";
 
-export default function Table() {
-  const data = [
-    // generate this dynamically every time button from text input is pressed
-    { id: 1, name: "John Doe", age: 25, meow: "999" },
-    { id: 2, name: "Jane Doe", age: 30, meow: "999" },
-    { id: 3, name: "Bob Smith", age: 28, meow: "999" },
-  ];
+interface Props {
+  tableResult: any;
+}
+
+export default function Table({ tableResult }: Props) {
+  if (Array.isArray(tableResult)) {
+    for (let element of tableResult) {
+      console.log(element);
+    }
+    return (
+      <table className="simple-table">
+        <thead>
+          <tr>
+            {Object.keys(tableResult[0]).map(
+              (property) => property !== "id" && <th>{property}</th>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {tableResult.map((item) => (
+            <tr>
+              {Object.keys(item).map(
+                (property) => property !== "id" && <td>{item[property]}</td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
 
   return (
     <table className="simple-table">
@@ -18,16 +41,7 @@ export default function Table() {
           <th>Meow</th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((item) => (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.age}</td>
-            <td>{item.meow}</td>
-          </tr>
-        ))}
-      </tbody>
+      <tbody>{}</tbody>
     </table>
   );
 }
