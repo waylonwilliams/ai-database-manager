@@ -92,10 +92,7 @@ contextBridge.exposeInMainWorld("mysql", {
                     console.log("Failed to show tables");
                     resolve({});
                   } else {
-                    console.log("should not be getting past this")
                     resolve(result);
-                    // console.log("Bypassing resolve?")
-                    // dbs[key] = result;
                   }
                 }
               );

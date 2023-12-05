@@ -1,36 +1,44 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 
 // how to map actual tables and such
 export default function Selector() {
-  let dbs = {};
+  let [dbs, setdbs] = useState({});
   let tables = [];
 
   useEffect(() => {
     const fetchData = async () => {
+      let temp_dbs = {};
       try {
-        dbs = await mysql.dbTableAPI.getDbTableInfo();
-        console.log("Returned to render side", dbs);
-        for (let key in dbs) {
+        temp_dbs = await mysql.dbTableAPI.getDbTableInfo();
+        for (let key in temp_dbs) {
           tables = await mysql.tableAPI.getTableInfo(key);
-          dbs[key] = tables.map((table: Object) => table["Tables_in_" + key]);
+          temp_dbs[key] = tables.map(
+            (table: Object) => table["Tables_in_" + key]
+          );
         }
-        console.log(dbs);
+        setdbs(temp_dbs);
       } catch (error) {
-        console.error("Error fetching database and table info:", error);
+        console.log("Error fetching database and table info:", error);
       }
     };
     fetchData();
   }, []);
 
+  console.log(dbs);
+
   return (
     <div className="side-column" id="fileList">
-      <div className="file-option-db">Meow db</div>
-      <div className="file-option">Table 1</div>
-      <div className="file-option">Table 2</div>
-      <div className="file-option">Table 3</div>
-      <div className="file-option-db">Other db</div>
-      <div className="file-option">Table 99</div>
+      {Object.keys(dbs).map((property) => (
+        <div key={property}>
+          <div className="file-option-db">{property}</div>
+          {dbs[property].map((item: string) => (
+            <div key={item} className="file-option">
+              {item}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
