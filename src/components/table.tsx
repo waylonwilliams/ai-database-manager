@@ -29,19 +29,27 @@ export default function Table({ tableResult }: Props) {
         </tbody>
       </table>
     );
+  } else if (tableResult instanceof Object) {
+    if ("affectedRows" in tableResult) {
+      return (
+        <div className="nontable-result">
+          Success, {tableResult.affectedRows} row(s) affected
+        </div>
+      );
+    } else if (tableResult === null) {
+      return <div className="nontable-result">Failure, check your syntax</div>;
+    } else {
+      return (
+        <div className="nontable-result">
+          I haven't implemented displaying this result yet
+        </div>
+      );
+    }
+  } else {
+    return (
+      <div className="nontable-result">
+        Placeholder for when nothing has been executed
+      </div>
+    );
   }
-
-  return (
-    <table className="simple-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Meow</th>
-        </tr>
-      </thead>
-      <tbody>{}</tbody>
-    </table>
-  );
 }

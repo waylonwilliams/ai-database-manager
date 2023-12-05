@@ -48,11 +48,48 @@ contextBridge.exposeInMainWorld('mysql', {
       })
     }
   },
-  dbAPI: {
-    setDB(dbName: string) {
+  dbTableAPI: {
+    async getDbTableInfo() {
       return new Promise((resolve) => {
-        // execute USE %s on dbName and return true or false to indicate error
-        resolve(dbName);
+        if (mysqlConnector !== null) {
+          mysqlConnector.query("SHOW DATABASES", function (err: Error, result: any) {
+            if (err) {
+              console.log("Failed to get file data")
+              resolve([]);
+            } else {
+              let post = [];
+              console.log(result);
+              for (let element of result) {
+                if (element.Database !== "information_schema" && element.Database !== "mysql" && element.Database !== "performance_schema" && element.Database !== "sys") {
+                  post.push(element.Database);
+                }
+              }
+              let dbtables_object = {};
+              for (let element of post) {
+                dbtables_object[element] = [];
+                mysqlConnector.query("USE " + element, function (err: Error) {
+                  if (err) {
+                    console.log("Failed to open a db");
+                    resolve({});
+                  } else {
+                    mysqlConnector.query("SHOW TABLES", function (err: Error, result: any) {
+                      if (err) {
+                        console.log("Failed to show tables for a db");
+                        resolve({})
+                      } else {
+                        for (let table of result) {
+                          dbtables_object[element].push(table["Tables_in_"+element]);
+                        }
+                      }
+                    })
+                  }
+                })
+              }
+              console.log(dbtables_object);
+              resolve(dbtables_object);
+            }
+          })
+        }
       })
     }
   }

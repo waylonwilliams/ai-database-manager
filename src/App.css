@@ -6,6 +6,7 @@
   resize: none;
   font-family: monospace;
   font-size: 14px;
+  outline: none;
 }
 
 .button {
@@ -124,4 +125,12 @@
 .login-input3 {
   margin: 5px;
   margin-left: 14px;
+}
+
+.nontable-result {
+  color: #ffffff;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+  font-size: 12px;
+  margin: 10px;
+  margin-left: 15px;
 }

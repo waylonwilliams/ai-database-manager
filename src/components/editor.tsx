@@ -11,9 +11,6 @@ export default function Editor({ setTableResult }: Props) {
   async function executeQuery() {
     let result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
-      if (result.length === 0) {
-        setTableResult(""); // empty quotes means show an empty table
-      }
       let i = 1;
       for (let element of result) {
         if ("id" in result) {
@@ -22,12 +19,8 @@ export default function Editor({ setTableResult }: Props) {
         element.id = i++;
       }
       setTableResult(result);
-    } else if (result === null) {
-      // failure message
-    } else if ("rowsAffected" in result) {
-      //
     } else {
-      console.log("Currently not supporting this return type");
+      setTableResult(result);
     }
   }
 
