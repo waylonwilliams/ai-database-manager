@@ -3,13 +3,19 @@ import "../App.css";
 
 // how to map actual tables and such
 export default function Selector() {
-  let files = null;
+  let dbs = {};
+  let tables = [];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        files = await mysql.dbTableAPI.getDbTableInfo();
-        console.log("Returned to render side", files);
+        dbs = await mysql.dbTableAPI.getDbTableInfo();
+        console.log("Returned to render side", dbs);
+        for (let key in dbs) {
+          tables = await mysql.tableAPI.getTableInfo(key);
+          dbs[key] = tables.map((table: Object) => table["Tables_in_" + key]);
+        }
+        console.log(dbs);
       } catch (error) {
         console.error("Error fetching database and table info:", error);
       }

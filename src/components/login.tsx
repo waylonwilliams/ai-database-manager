@@ -6,9 +6,9 @@ interface Props {
 }
 
 export default function Login({ SetMySQLLogin }: Props) {
-  const [host, setHost] = useState("");
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
+  const [host, setHost] = useState("localhost");
+  const [user, setUser] = useState("root");
+  const [pass, setPass] = useState("hahahddd%55^jjd9");
 
   async function attemptLogin() {
     const result = await mysql.connectAPI.connect(host, user, pass);

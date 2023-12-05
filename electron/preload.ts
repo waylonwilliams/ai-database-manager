@@ -46,17 +46,17 @@ contextBridge.exposeInMainWorld("mysql", {
     },
   },
   dbTableAPI: {
-    async getDbTableInfo() {
+    getDbTableInfo() {
       return new Promise((resolve) => {
+        let post: Object = {};
         if (mysqlConnector !== null) {
           mysqlConnector.query(
             "SHOW DATABASES",
             function (err: Error, result: any) {
               if (err) {
                 console.log("Failed to get file data");
-                resolve([]);
+                resolve({});
               } else {
-                let post : Array<String> = [];
                 for (let element of result) {
                   if (
                     element.Database !== "information_schema" &&
@@ -64,41 +64,43 @@ contextBridge.exposeInMainWorld("mysql", {
                     element.Database !== "performance_schema" &&
                     element.Database !== "sys"
                   ) {
-                    post.push(element.Database);
+                    post[element.Database] = [];
                   }
                 }
-                let dbtables_object : Object = {};
-                for (let element of post) {
-                  dbtables_object[element] = [];
-                  mysqlConnector.query("USE " + element, function (err: Error) {
-                    if (err) {
-                      console.log("Failed to open a db");
-                      resolve({});
-                    } else {
-                      mysqlConnector.query(
-                        "SHOW TABLES",
-                        function (err: Error, result: any) {
-                          if (err) {
-                            console.log("Failed to show tables for a db");
-                            resolve({});
-                          } else {
-                            for (let table of result) {
-                              dbtables_object[element].push(
-                                table["Tables_in_" + element],
-                              );
-                            }
-                          }
-                        },
-                      );
-                    }
-                  });
-                }
-                console.log(dbtables_object);
-                resolve(dbtables_object);
+                resolve(post);
               }
             },
           );
+        } else {
+          resolve({});
         }
+      });
+    },
+  },
+  tableAPI: {
+    getTableInfo(db: string) {
+      return new Promise((resolve) => {
+          mysqlConnector.query("USE " + db, function (err: Error) {
+            if (err) {
+              console.log("Failed to open a db");
+              resolve({});
+            } else {
+              mysqlConnector.query(
+                "SHOW TABLES",
+                function (err: Error, result: any) {
+                  if (err) {
+                    console.log("Failed to show tables");
+                    resolve({});
+                  } else {
+                    console.log("should not be getting past this")
+                    resolve(result);
+                    // console.log("Bypassing resolve?")
+                    // dbs[key] = result;
+                  }
+                }
+              );
+            }
+          });
       });
     },
   },
