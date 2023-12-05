@@ -12,15 +12,15 @@ export default function Table({ tableResult }: Props) {
     return (
       <table className="simple-table">
         <thead>
-          <tr>
+          <tr key={0}>
             {Object.keys(tableResult[0]).map(
               (property) => property !== "id" && <th>{property}</th>
             )}
           </tr>
         </thead>
         <tbody>
-          {tableResult.map((item) => (
-            <tr>
+          {tableResult.map((item, index) => (
+            <tr key={index}>
               {Object.keys(item).map(
                 (property) => property !== "id" && <td>{item[property]}</td>
               )}
