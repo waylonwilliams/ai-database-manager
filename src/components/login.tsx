@@ -9,9 +9,15 @@ export default function Login({ SetMySQLLogin }: Props) {
   const [host, setHost] = useState("localhost");
   const [user, setUser] = useState("root");
   const [pass, setPass] = useState("hahahddd%55^jjd9");
+  const [port, setPort] = useState("3306");
 
   async function attemptLogin() {
-    const result = await mysql.connectAPI.connect(host, user, pass);
+    const result = await mysql.connectAPI.connect(
+      host,
+      user,
+      pass,
+      Number(port)
+    );
     if (result != null) {
       // am I sure this is what returns on failure
       SetMySQLLogin(true);
@@ -44,13 +50,23 @@ export default function Login({ SetMySQLLogin }: Props) {
         }}
       />{" "}
       <br />
-      Password:
+      Password(leave blank if none):
       <input
         type="text"
         className="login-input3"
         value={pass}
         onChange={(val) => {
           setPass(val.target.value);
+        }}
+      />{" "}
+      <br />
+      Port(localhost default is 3306):
+      <input
+        type="text"
+        className="login-input3"
+        value={port}
+        onChange={(val) => {
+          setPort(val.target.value);
         }}
       />{" "}
       <br />

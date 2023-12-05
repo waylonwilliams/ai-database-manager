@@ -9,12 +9,13 @@ var mysqlConnector: any = null;
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
-    connect(host: string, user: string, pass: string) {
+    connect(host: string, user: string, pass: string, port: number) {
       return new Promise((resolve) => {
         mysqlConnector = mysql.createConnection({
           host: host,
           user: user,
           password: pass,
+          port: port,
         });
         mysqlConnector.connect(function (err: Error) {
           if (err) {
@@ -83,14 +84,14 @@ contextBridge.exposeInMainWorld("mysql", {
           mysqlConnector.query("USE " + db, function (err: Error) {
             if (err) {
               console.log("Failed to open a db");
-              resolve({});
+              resolve("err");
             } else {
               mysqlConnector.query(
                 "SHOW TABLES",
                 function (err: Error, result: any) {
                   if (err) {
                     console.log("Failed to show tables");
-                    resolve({});
+                    resolve("err");
                   } else {
                     resolve(result);
                   }

@@ -5,10 +5,7 @@ interface Props {
 }
 
 export default function Table({ tableResult }: Props) {
-  if (Array.isArray(tableResult)) {
-    for (let element of tableResult) {
-      console.log(element);
-    }
+  if (Array.isArray(tableResult) && tableResult.length !== 0) {
     return (
       <table className="simple-table">
         <thead>

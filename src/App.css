@@ -67,6 +67,15 @@
   font-family: 'Verdana', 'Geneva', sans-serif;
 }
 
+.file-option-db-selected {
+  font-size: 16px;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+  color: blue;
+}
+
 .file-option-db:hover {
   background-color: rgb(100, 105, 105);
 }
