@@ -1,148 +1,159 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import * as mysql from 'mysql2';
-
+import { contextBridge, ipcRenderer } from "electron";
+import * as mysql from "mysql2";
 
 // --------- Expose some API to the Renderer process ---------
-contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
 
-contextBridge.exposeInMainWorld('mysql', {
+contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
     connect(host: string, user: string, pass: string) {
       return new Promise((resolve) => {
         mysqlConnector = mysql.createConnection({
           host: host,
           user: user,
-          password: pass
+          password: pass,
         });
-        mysqlConnector.connect(function(err: Error) {
+        mysqlConnector.connect(function (err: Error) {
           if (err) {
             console.log("failed to connect");
             resolve(null);
           } else {
-            console.log(mysqlConnector);
             resolve(mysqlConnector);
           } // I am considering not returning anything, just establishing and leaving the connection on the backend
         });
       });
-    }
+    },
   },
-  queryAPI: { // You can only make 1 line of query at a time
+  queryAPI: {
+    // You can only make 1 line of query at a time
     // I need to handle mutli lines by looping through the string split at the semicolons
     makeQuery(query: string) {
       return new Promise((resolve) => {
         if (mysqlConnector !== null) {
-        mysqlConnector.query(query, function (err: Error, result: any) {
-          if (err) {
-            console.log(err);
-            console.log("Failed query");
-            return resolve(null);
-          } else {
-            console.log(result);
-            return resolve(result);
-          }
-        })
-      }
-      })
-    }
+          mysqlConnector.query(query, function (err: Error, result: any) {
+            if (err) {
+              console.log("Failed query");
+              return resolve(null);
+            } else {
+              return resolve(result);
+            }
+          });
+        }
+      });
+    },
   },
   dbTableAPI: {
     async getDbTableInfo() {
       return new Promise((resolve) => {
         if (mysqlConnector !== null) {
-          mysqlConnector.query("SHOW DATABASES", function (err: Error, result: any) {
-            if (err) {
-              console.log("Failed to get file data")
-              resolve([]);
-            } else {
-              let post = [];
-              console.log(result);
-              for (let element of result) {
-                if (element.Database !== "information_schema" && element.Database !== "mysql" && element.Database !== "performance_schema" && element.Database !== "sys") {
-                  post.push(element.Database);
-                }
-              }
-              let dbtables_object = {};
-              for (let element of post) {
-                dbtables_object[element] = [];
-                mysqlConnector.query("USE " + element, function (err: Error) {
-                  if (err) {
-                    console.log("Failed to open a db");
-                    resolve({});
-                  } else {
-                    mysqlConnector.query("SHOW TABLES", function (err: Error, result: any) {
-                      if (err) {
-                        console.log("Failed to show tables for a db");
-                        resolve({})
-                      } else {
-                        for (let table of result) {
-                          dbtables_object[element].push(table["Tables_in_"+element]);
-                        }
-                      }
-                    })
+          mysqlConnector.query(
+            "SHOW DATABASES",
+            function (err: Error, result: any) {
+              if (err) {
+                console.log("Failed to get file data");
+                resolve([]);
+              } else {
+                let post : Array<String> = [];
+                for (let element of result) {
+                  if (
+                    element.Database !== "information_schema" &&
+                    element.Database !== "mysql" &&
+                    element.Database !== "performance_schema" &&
+                    element.Database !== "sys"
+                  ) {
+                    post.push(element.Database);
                   }
-                })
+                }
+                let dbtables_object : Object = {};
+                for (let element of post) {
+                  dbtables_object[element] = [];
+                  mysqlConnector.query("USE " + element, function (err: Error) {
+                    if (err) {
+                      console.log("Failed to open a db");
+                      resolve({});
+                    } else {
+                      mysqlConnector.query(
+                        "SHOW TABLES",
+                        function (err: Error, result: any) {
+                          if (err) {
+                            console.log("Failed to show tables for a db");
+                            resolve({});
+                          } else {
+                            for (let table of result) {
+                              dbtables_object[element].push(
+                                table["Tables_in_" + element],
+                              );
+                            }
+                          }
+                        },
+                      );
+                    }
+                  });
+                }
+                console.log(dbtables_object);
+                resolve(dbtables_object);
               }
-              console.log(dbtables_object);
-              resolve(dbtables_object);
-            }
-          })
+            },
+          );
         }
-      })
-    }
-  }
+      });
+    },
+  },
 });
 
 // -----------------------------------------------------------------
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
-  const protos = Object.getPrototypeOf(obj)
+  const protos = Object.getPrototypeOf(obj);
 
   for (const [key, value] of Object.entries(protos)) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) continue
+    if (Object.prototype.hasOwnProperty.call(obj, key)) continue;
 
-    if (typeof value === 'function') {
+    if (typeof value === "function") {
       // Some native APIs, like `NodeJS.EventEmitter['on']`, don't work in the Renderer process. Wrapping them into a function.
       obj[key] = function (...args: any) {
-        return value.call(obj, ...args)
-      }
+        return value.call(obj, ...args);
+      };
     } else {
-      obj[key] = value
+      obj[key] = value;
     }
   }
-  return obj
+  return obj;
 }
 
 // --------- Preload scripts loading ---------
-function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
-  return new Promise(resolve => {
+function domReady(
+  condition: DocumentReadyState[] = ["complete", "interactive"],
+) {
+  return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
-      resolve(true)
+      resolve(true);
     } else {
-      document.addEventListener('readystatechange', () => {
+      document.addEventListener("readystatechange", () => {
         if (condition.includes(document.readyState)) {
-          resolve(true)
+          resolve(true);
         }
-      })
+      });
     }
-  })
+  });
 }
 
 const safeDOM = {
   append(parent: HTMLElement, child: HTMLElement) {
-    if (!Array.from(parent.children).find(e => e === child)) {
-      parent.appendChild(child)
+    if (!Array.from(parent.children).find((e) => e === child)) {
+      parent.appendChild(child);
     }
   },
   remove(parent: HTMLElement, child: HTMLElement) {
-    if (Array.from(parent.children).find(e => e === child)) {
-      parent.removeChild(child)
+    if (Array.from(parent.children).find((e) => e === child)) {
+      parent.removeChild(child);
     }
   },
-}
+};
 
 /**
  * https://tobiasahlin.com/spinkit
@@ -151,7 +162,7 @@ const safeDOM = {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
-  const className = `loaders-css__square-spin`
+  const className = `loaders-css__square-spin`;
   const styleContent = `
 @keyframes square-spin {
   25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
@@ -178,34 +189,34 @@ function useLoading() {
   background: #282c34;
   z-index: 9;
 }
-    `
-  const oStyle = document.createElement('style')
-  const oDiv = document.createElement('div')
+    `;
+  const oStyle = document.createElement("style");
+  const oDiv = document.createElement("div");
 
-  oStyle.id = 'app-loading-style'
-  oStyle.innerHTML = styleContent
-  oDiv.className = 'app-loading-wrap'
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`
+  oStyle.id = "app-loading-style";
+  oStyle.innerHTML = styleContent;
+  oDiv.className = "app-loading-wrap";
+  oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
 
   return {
     appendLoading() {
-      safeDOM.append(document.head, oStyle)
-      safeDOM.append(document.body, oDiv)
+      safeDOM.append(document.head, oStyle);
+      safeDOM.append(document.body, oDiv);
     },
     removeLoading() {
-      safeDOM.remove(document.head, oStyle)
-      safeDOM.remove(document.body, oDiv)
+      safeDOM.remove(document.head, oStyle);
+      safeDOM.remove(document.body, oDiv);
     },
-  }
+  };
 }
 
 // ----------------------------------------------------------------------
 
-const { appendLoading, removeLoading } = useLoading()
-domReady().then(appendLoading)
+const { appendLoading, removeLoading } = useLoading();
+domReady().then(appendLoading);
 
-window.onmessage = ev => {
-  ev.data.payload === 'removeLoading' && removeLoading()
-}
+window.onmessage = (ev) => {
+  ev.data.payload === "removeLoading" && removeLoading();
+};
 
-setTimeout(removeLoading, 4999)
+setTimeout(removeLoading, 4999);

@@ -14,10 +14,9 @@ export default function Login({ SetMySQLLogin }: Props) {
     const result = await mysql.connectAPI.connect(host, user, pass);
     if (result != null) {
       // am I sure this is what returns on failure
-      console.log(result);
       SetMySQLLogin(true);
     } else {
-      console.log("returned null");
+      console.log("connecting failed, try logging in again");
       // raise an incorrect login toast or sum
     }
   }
