@@ -29,6 +29,14 @@
   height: 35px;
 }
 
+.button-disconnect {
+  margin: 10px;
+  background-color: rgb(100, 105, 105);
+  color: #ffffff;
+  width: 90px;
+  height: 35px;
+}
+
 .simple-table {
   border-collapse: collapse;
   width: 101.5%;

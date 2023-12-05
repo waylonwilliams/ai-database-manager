@@ -3,8 +3,13 @@ import "../App.css";
 import Table from "./table";
 import Selector from "./file";
 import Editor from "./editor";
+import Close from "./disconnect";
 
-export default function Workbench() {
+interface Props {
+  SetMySQLLogin: any;
+}
+
+export default function Workbench({ SetMySQLLogin }: Props) {
   const [tableResult, setTableResult] = useState("");
   const [selectedDB, setSelectedDB] = useState("");
 
@@ -15,6 +20,7 @@ export default function Workbench() {
         <Table tableResult={tableResult} />
       </div>
       <div className="column right">
+        <Close SetMySQLLogin={SetMySQLLogin} />
         <Selector
           tableResult={tableResult}
           setTableResult={setTableResult}
