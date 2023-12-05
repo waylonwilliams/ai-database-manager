@@ -26,7 +26,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-  win.setBackgroundColor('#333333');
+  win.setBackgroundColor('#272829');
   win.setTitle("");
 
   // Test active push message to Renderer-process.

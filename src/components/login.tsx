@@ -19,58 +19,59 @@ export default function Login({ SetMySQLLogin }: Props) {
       Number(port)
     );
     if (result != null) {
-      // am I sure this is what returns on failure
       SetMySQLLogin(true);
     } else {
       console.log("connecting failed, try logging in again");
-      // raise an incorrect login toast or sum
+      // raise some kind of toast here
     }
   }
 
   return (
     <div className="login-main">
-      <h1>Connect to your database</h1>
-      Host:
+      <h1 className="login-header">Connect to your database</h1>
       <input
         type="text"
-        className="login-input1"
+        className="login-field"
         value={host}
         onChange={(val) => {
           setHost(val.target.value);
         }}
+        placeholder="Host"
       />{" "}
       <br />
-      Username:
       <input
         type="text"
-        className="login-input2"
+        className="login-field"
         value={user}
         onChange={(val) => {
           setUser(val.target.value);
         }}
+        placeholder="Username"
       />{" "}
       <br />
-      Password(leave blank if none):
       <input
         type="text"
-        className="login-input3"
+        className="login-field"
         value={pass}
         onChange={(val) => {
           setPass(val.target.value);
         }}
+        placeholder="Password (leave blank if none)"
       />{" "}
       <br />
-      Port(localhost default is 3306):
       <input
         type="text"
-        className="login-input3"
+        className="login-field"
         value={port}
         onChange={(val) => {
           setPort(val.target.value);
         }}
+        placeholder="Port (3306 is default for localhost)"
       />{" "}
       <br />
-      <button onClick={attemptLogin}>Connect</button>
+      <button className="login-button" onClick={attemptLogin}>
+        Connect
+      </button>
     </div>
   );
 }
