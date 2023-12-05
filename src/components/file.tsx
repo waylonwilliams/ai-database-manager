@@ -19,10 +19,12 @@ export default function Selector({
   let tables = [];
 
   async function tableSelect(e: React.MouseEvent<HTMLDivElement>) {
-    console.log("Table query:", "SELECT * FROM " + e.currentTarget.innerHTML);
-    let result = await mysql.queryAPI.makeQuery(
-      "SELECT * FROM " + e.currentTarget.innerHTML
-    );
+    const curDB = e.currentTarget.id;
+    const curTable = e.currentTarget.innerHTML;
+    setSelectedDB(curDB);
+    let result = await mysql.queryAPI.makeQuery("USE " + curDB);
+    result = await mysql.queryAPI.makeQuery("SELECT * FROM " + curTable);
+    console.log("HERE IT IS", result);
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {
@@ -39,12 +41,10 @@ export default function Selector({
 
   const dbSelect = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
-      console.log("DB query:", "USE " + e.currentTarget.innerHTML);
       setSelectedDB(e.currentTarget.innerHTML);
       let result = await mysql.queryAPI.makeQuery(
         "USE " + e.currentTarget.innerHTML
       );
-      console.log(result);
     },
     [setSelectedDB]
   );
@@ -85,7 +85,12 @@ export default function Selector({
             </div>
           )}
           {dbs[property].map((item: string) => (
-            <div key={item} onClick={tableSelect} className="file-option">
+            <div
+              key={item}
+              id={property}
+              onClick={tableSelect}
+              className="file-option"
+            >
               {item}
             </div>
           ))}

@@ -5,7 +5,10 @@ interface Props {
 }
 
 export default function Table({ tableResult }: Props) {
-  if (Array.isArray(tableResult) && tableResult.length !== 0) {
+  if (Array.isArray(tableResult)) {
+    if (tableResult.length === 0) {
+      return <div className="nontable-result">0 rows returned</div>;
+    }
     return (
       <table className="simple-table">
         <thead>
