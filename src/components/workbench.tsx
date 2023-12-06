@@ -16,7 +16,11 @@ export default function Workbench({ SetMySQLLogin }: Props) {
   return (
     <div className="row">
       <div className="column left">
-        <Editor setTableResult={setTableResult} setSelectedDB={setSelectedDB} />
+        <Editor
+          setTableResult={setTableResult}
+          setSelectedDB={setSelectedDB}
+          selectedDB={selectedDB}
+        />
         <Table tableResult={tableResult} />
       </div>
       <div className="column right">

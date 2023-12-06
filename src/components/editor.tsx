@@ -3,10 +3,15 @@ import "../App.css";
 
 interface Props {
   setTableResult: (val: any) => void;
-  setSelectedDB: any;
+  setSelectedDB: (val: any) => void;
+  selectedDB: any;
 }
 
-export default function Editor({ setTableResult, setSelectedDB }: Props) {
+export default function Editor({
+  setTableResult,
+  setSelectedDB,
+  selectedDB,
+}: Props) {
   const [currentQuery, setCurrentQuery] = useState("");
 
   async function executeQuery() {
@@ -17,8 +22,8 @@ export default function Editor({ setTableResult, setSelectedDB }: Props) {
     ) {
       setSelectedDB(currentQuery.slice(4)); // slice happening in line
     }
-    console.log("CuRRENT QUERY SLICED?: ", currentQuery);
-    let result = await mysql.queryAPI.makeQuery(currentQuery);
+    let result = await mysql.queryAPI.makeQuery("USE " + selectedDB); // 2 queries does make this less efficient, but solves the issue, i could be more organized though
+    result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {
@@ -32,6 +37,8 @@ export default function Editor({ setTableResult, setSelectedDB }: Props) {
       setTableResult(result);
     }
   }
+
+  console.log("Selected db", selectedDB);
 
   return (
     <>
