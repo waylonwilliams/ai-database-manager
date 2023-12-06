@@ -36,8 +36,6 @@ export default function Table({ tableResult }: Props) {
           Success, {tableResult.affectedRows} row(s) affected
         </div>
       );
-    } else if (tableResult === null) {
-      return <div className="nontable-result">Failure, check your syntax</div>;
     } else {
       return (
         <div className="nontable-result">
@@ -46,10 +44,11 @@ export default function Table({ tableResult }: Props) {
       );
     }
   } else {
+    if (tableResult === null) {
+      return <div className="nontable-result">Failure, check your syntax</div>;
+    }
     return (
-      <div className="nontable-result">
-        Placeholder for when nothing has been executed
-      </div>
+      <div className="nontable-result">The result will be displayed here</div>
     );
   }
 }
