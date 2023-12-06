@@ -36,9 +36,10 @@ contextBridge.exposeInMainWorld("mysql", {
         if (mysqlConnector !== null) {
           mysqlConnector.query(query, function (err: Error, result: any) {
             if (err) {
-              console.log("Failed query");
+              console.log("Failed query", err);
               return resolve(null);
             } else {
+              console.log("Query success");
               return resolve(result);
             }
           });

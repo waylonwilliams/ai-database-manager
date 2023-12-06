@@ -71,7 +71,7 @@ export default function Selector({
   }, [tableResult]);
 
   return (
-    <div className="side-column" id="fileList">
+    <div className="side-column">
       {Object.keys(dbs).map((property) => (
         <div key={property}>
           {property === selectedDB && (

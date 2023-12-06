@@ -55,37 +55,84 @@ button {
   transition-property: color, background-color, border-color;
 }
 
-button:hover {
+button:hover {  
   background-color: #5a5f70;
   border-color: #1b1f2326;
   transition-duration: 0.1s;
 }
 
-.button {
-  position: absolute;
-  top: 11.5rem;
-  left: 26.75em;
-}
-
-.button2 {
-  position: absolute;
-  top: 11.5rem;
-  left: 33.75em;
-}
-
-
-
-
 .field {
   width: 100%;
   height: 200px;
-  background-color: rgba(75, 81, 84, 1);
+  background-color: #61677A;
   color: #ffffff;
   resize: none;
   font-family: monospace;
   font-size: 14px;
   outline: none;
 }
+
+.file-option-db {
+  font-size: 16px;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+}
+
+.file-option-db-selected {
+  font-size: 16px;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+  background-color: #3691ec;
+}
+
+.file-option-db-selected:hover {
+  background-color: #41a0ff;
+}
+
+.file-option {
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+}
+
+.file-option:hover {
+  background-color: #757d93;
+}
+
+.file-option-db:hover {
+  background-color: #757d93;
+}
+
+/* make sure to include :hover color change */
+
+.side-column {
+  background-color: #61677A;
+  color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.nontable-result {
+  color: #ffffff;
+  font-family: 'Verdana', 'Geneva', sans-serif;
+  font-size: 14px;
+  margin: 10px;
+  margin-left: 15px;
+}
+
+
+
+
+
+
 
 .simple-table {
   border-collapse: collapse;
@@ -105,48 +152,6 @@ button:hover {
 
 .simple-table th {
   background-color: rgba(75, 81, 84, 1);
-}
-
-.side-column {
-  background-color: rgba(75, 81, 84, 1);
-  color: #fff;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.file-option-db {
-  font-size: 16px;
-  padding: 2px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-family: 'Verdana', 'Geneva', sans-serif;
-}
-
-.file-option-db-selected {
-  font-size: 16px;
-  padding: 2px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-family: 'Verdana', 'Geneva', sans-serif;
-  color: blue;
-}
-
-.file-option-db:hover {
-  background-color: rgb(100, 105, 105);
-}
-
-.file-option {
-  font-size: 14px;
-  margin-left: 10px;
-  padding: 2px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-family: 'Verdana', 'Geneva', sans-serif;
-}
-
-.file-option:hover {
-  background-color: rgb(100, 105, 105);
 }
 
 .row {
@@ -170,12 +175,4 @@ button:hover {
   content: "";
   display: table;
   clear: both;
-}
-
-.nontable-result {
-  color: #ffffff;
-  font-family: 'Verdana', 'Geneva', sans-serif;
-  font-size: 12px;
-  margin: 10px;
-  margin-left: 15px;
 }

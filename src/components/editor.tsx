@@ -10,14 +10,14 @@ export default function Editor({ setTableResult, setSelectedDB }: Props) {
   const [currentQuery, setCurrentQuery] = useState("");
 
   async function executeQuery() {
-    console.log("EXEecuting query");
     if (
       currentQuery.startsWith("USE ") || // temporary fix, ideally force uppercase and just rely on that
       currentQuery.startsWith("Use ") ||
       currentQuery.startsWith("use ")
     ) {
-      setSelectedDB(currentQuery.slice(4));
+      setSelectedDB(currentQuery.slice(4)); // slice happening in line
     }
+    console.log("CuRRENT QUERY SLICED?: ", currentQuery);
     let result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
       let i = 1;
