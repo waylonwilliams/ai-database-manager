@@ -1,11 +1,14 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
+// import OpenAI from "openai";
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
+// const openai = new OpenAI();
+
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
@@ -102,6 +105,21 @@ contextBridge.exposeInMainWorld("mysql", {
           });
       });
     },
+  },
+  columnAPI: {
+    getColumnInfo(table: string) {
+      return new Promise((resolve) => {
+        mysqlConnector.query("DESCRIBE " + table, function (err: Error, result: any) {
+          if (err) {
+            console.log("Failed to get table columns info", table);
+            resolve("err");
+          } else {
+            console.log(result);
+            resolve(result);
+          }
+        })
+      })
+    }
   },
 });
 

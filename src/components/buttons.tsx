@@ -33,7 +33,6 @@ export default function Buttons({
         }
         element.id = i++;
       }
-      console.log("HERE", result);
       setTableResult(result);
     } else {
       setTableResult(result); // failed query sends null anyways?
