@@ -1,4 +1,5 @@
 import "../App.css";
+import NewEditor from "./neweditor";
 
 interface Props {
   currentQuery: any;
@@ -8,6 +9,7 @@ interface Props {
 export default function Editor({ currentQuery, setCurrentQuery }: Props) {
   return (
     <>
+      <NewEditor />
       <textarea
         className="field"
         value={currentQuery}
