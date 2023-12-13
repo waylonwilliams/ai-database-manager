@@ -3,23 +3,6 @@
   text-align: center;
 }
 
-.login-field {
-  width: 35%;
-  margin: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #000000;
-  vertical-align: middle;
-  background-color: #D8D9DA;
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  border: 1px solid #000000;
-  border-radius: 6px;
-  outline: none;
-  box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
-}
-
 .login-field:focus{
   border-color: #000000;
   outline: none;
@@ -35,7 +18,7 @@
   text-align: center;
 }
 
-button {
+/* button {
   margin: 5px;
   margin-bottom: 15px;
   display: inline-block;
@@ -58,7 +41,7 @@ button {
 button:hover {  
   background-color: #5a5f70;
   transition-duration: 0.1s;
-}
+} */
 
 .button-div {
   text-align: center;
@@ -193,4 +176,81 @@ button:hover {
   content: "";
   display: table;
   clear: both;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.login-div {
+  width: 40%;
+  max-width: 320px;
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
+
+.new-login-field {
+  margin: 8px;
+  padding: 5px 10px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #000000;
+  background-color: #dddddd;
+  border: 1px solid #cccccc;
+  width: 70%;
+  max-width: 300px;
+  border-radius: 5px;
+}
+
+.db-selector-button {
+  margin-top: 13%;
+  padding: 20px;
+  margin-bottom: 10%;
+}
+
+.db-connect-button {
+  margin-bottom: 13%;
+  padding: 5px;
+  margin-top: 5%;
+  font-size: 14px;
+  color: #000000;
+  background-color: #dddddd;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  min-width: 80px;
+}
+
+.login-field {
+  width: 35%;
+  margin: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+  vertical-align: middle;
+  background-color: #D8D9DA;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  outline: none;
+  box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+}
+
+.toggle-db {
+  position: relative;
+  display: inline-block;
+  width: 65px;
+  height: 35px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }

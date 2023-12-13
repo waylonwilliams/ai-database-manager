@@ -28,7 +28,6 @@ export default function Login({ SetMySQLLogin }: Props) {
 
   return (
     <div className="login-main">
-      <h1 className="login-header">Connect to your database</h1>
       <input
         type="text"
         className="login-field"
@@ -72,6 +71,7 @@ export default function Login({ SetMySQLLogin }: Props) {
       <button className="login-button" onClick={attemptLogin}>
         Connect
       </button>
+      <br />
     </div>
   );
 }
