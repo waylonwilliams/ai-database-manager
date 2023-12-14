@@ -1,7 +1,6 @@
 import "./App.css";
 import Workbench from "./components/workbench";
 import Login from "./components/login";
-import NewLogin from "./components/newlogin";
 import { useState } from "react";
 
 export default function App() {
@@ -9,7 +8,7 @@ export default function App() {
   // {MySQLLogin === false && <Login SetMySQLLogin={SetMySQLLogin} />}
   return (
     <>
-      {MySQLLogin === false && <NewLogin />}
+      {MySQLLogin === false && <Login SetMySQLLogin={SetMySQLLogin} />}
       {MySQLLogin === true && <Workbench SetMySQLLogin={SetMySQLLogin} />}
     </>
   );
