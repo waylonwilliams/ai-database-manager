@@ -49,10 +49,10 @@ export default function Login({ SetMySQLLogin }: Props) {
           <div className={`toggle-btn ${!toggle ? "left-select" : ""}`}></div>
           <div className="selection-container">
             <div className="image-container">
-              <img src="../../files/mysql_select.png" />
+              <img src="../../files/mysql_deselect.png" />
               <img
-                className={`${toggle ? "deselect" : "selected"} second-image`}
-                src="../../files/mysql_deselect.png"
+                className={`${!toggle ? "deselect" : "selected"} second-image`}
+                src="../../files/mysql_select.png"
               />
             </div>
             <div className="image-container">
