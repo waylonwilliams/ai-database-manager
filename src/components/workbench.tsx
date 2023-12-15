@@ -16,10 +16,6 @@ export default function Workbench({ SetMySQLLogin }: Props) {
 
   return (
     <div className="row">
-      <div className="column left">
-        <Editor currentQuery={currentQuery} setCurrentQuery={setCurrentQuery} />
-        <Table tableResult={tableResult} />
-      </div>
       <div className="column right">
         <Buttons
           currentQuery={currentQuery}
@@ -34,6 +30,10 @@ export default function Workbench({ SetMySQLLogin }: Props) {
           selectedDB={selectedDB}
           setSelectedDB={setSelectedDB}
         />
+      </div>
+      <div className="column left">
+        <Editor currentQuery={currentQuery} setCurrentQuery={setCurrentQuery} />
+        <Table tableResult={tableResult} />
       </div>
     </div>
   );
