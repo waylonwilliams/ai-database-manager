@@ -308,8 +308,6 @@ fix overflowing text, end with elipsses
 .simple-table {
   border-collapse: collapse;
   width: 98%;
-  margin-left: 10px;
-  margin-top: 10px;
   background-color: #eeeeee;
   color: #000000;
   font-family: Arial, Helvetica, sans-serif;
@@ -324,10 +322,13 @@ fix overflowing text, end with elipsses
 
 .simple-table th {
   background-color: #5090F1;
+  border: 1px solid #000000;
 }
 
 .table-container {
-  height: 65vh;
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 63vh;
   overflow: auto;
 }
 

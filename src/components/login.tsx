@@ -12,8 +12,6 @@ export default function Login({ SetMySQLLogin }: Props) {
   const [port, setPort] = useState("3306");
   const [toggle, setToggle] = useState(false); // left side (mysql)
 
-  console.log(`second-image ${toggle ? "deselect" : ""}`);
-
   async function attemptLogin() {
     const result = await mysql.connectAPI.connect(
       host,

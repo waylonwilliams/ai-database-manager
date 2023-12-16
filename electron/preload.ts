@@ -1,14 +1,17 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
-// import OpenAI from "openai";
+import OpenAI from "openai";
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-// const openai = new OpenAI();
-
+const openAIKey = "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"; // set your OpenAI key here
+if (openAIKey !== null) {
+  var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
+  console.log(openai);
+}
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
@@ -84,40 +87,81 @@ contextBridge.exposeInMainWorld("mysql", {
   tableAPI: {
     getTableInfo(db: string) {
       return new Promise((resolve) => {
-          mysqlConnector.query("USE " + db, function (err: Error) {
-            if (err) {
-              console.log("Failed to open a db");
-              resolve("err");
-            } else {
-              mysqlConnector.query(
-                "SHOW TABLES",
-                function (err: Error, result: any) {
-                  if (err) {
-                    console.log("Failed to show tables");
-                    resolve("err");
-                  } else {
-                    resolve(result);
-                  }
+        mysqlConnector.query("USE " + db, function (err: Error) {
+          if (err) {
+            console.log("Failed to open a db");
+            resolve("err");
+          } else {
+            mysqlConnector.query(
+              "SHOW TABLES",
+              function (err: Error, result: any) {
+                if (err) {
+                  console.log("Failed to show tables");
+                  resolve("err");
+                } else {
+                  resolve(result);
                 }
-              );
-            }
-          });
+              },
+            );
+          }
+        });
       });
     },
   },
   columnAPI: {
     getColumnInfo(table: string) {
       return new Promise((resolve) => {
-        mysqlConnector.query("DESCRIBE " + table, function (err: Error, result: any) {
-          if (err) {
-            console.log("Failed to get table columns info", table);
-            resolve("err");
-          } else {
-            resolve(result);
-          }
-        })
-      })
-    }
+        mysqlConnector.query(
+          "DESCRIBE " + table,
+          function (err: Error, result: any) {
+            if (err) {
+              console.log("Failed to get table columns info", table);
+              resolve("err");
+            } else {
+              resolve(result);
+            }
+          },
+        );
+      });
+    },
+  },
+});
+
+contextBridge.exposeInMainWorld("postgre", {
+  queryAPI: {
+    getMeow() {
+      return 4;
+    },
+  },
+});
+
+contextBridge.exposeInMainWorld("gpt", {
+  gptAPI: {
+    async makeRequest(database_info: any, request: string) {
+      const completion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. Only respond when the prompt asks for a query, other prompts will provide information about the MySQL connection such as database names, table names, and table values.",
+          },
+          {
+            role: "user",
+            content: `Here is some information about the MySQL connection: ${JSON.stringify(
+              database_info,
+            )}`,
+          },
+          { role: "assistant", content: "" },
+          {
+            role: "user",
+            content: `Using the database information previously given, write a MySQL query that satisfies this prompt: ${request}`,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+      });
+      console.log(completion.choices[0]);
+      return completion.choices[0];
+    },
   },
 });
 

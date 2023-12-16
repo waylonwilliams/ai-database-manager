@@ -26,7 +26,6 @@ export default function Selector({
     setSelectedDB(curDB);
     let result = await mysql.queryAPI.makeQuery("USE " + curDB);
     result = await mysql.queryAPI.makeQuery("SELECT * FROM " + curTable);
-    console.log("HERE IT IS", result);
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {
@@ -62,14 +61,13 @@ export default function Selector({
             temp_dbs[key] = tables.map(
               (table: Object) => table["Tables_in_" + key]
             );
-            for (let meow in tables) {
-              let result = await mysql.columnAPI.getColumnInfo(
-                tables[meow]["Tables_in_" + key]
-              );
-            }
+            // for (let meow in tables) {
+            //   let result = await mysql.columnAPI.getColumnInfo(
+            //     tables[meow]["Tables_in_" + key]
+            //   );
+            // }
           }
         }
-        console.log(temp_dbs);
         setdbs(temp_dbs);
       } catch (error) {
         console.log("Error fetching database and table info:", error);

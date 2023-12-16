@@ -39,6 +39,37 @@ export default function Editor({
     }
   }
 
+  async function executeGPT() {
+    let tables = [];
+    let temp_dbs = {};
+    try {
+      temp_dbs = await mysql.dbTableAPI.getDbTableInfo();
+      for (const key in temp_dbs) {
+        tables = await mysql.tableAPI.getTableInfo(key);
+        if (tables !== "err") {
+          temp_dbs[key] = {};
+          for (const table in tables) {
+            temp_dbs[key][tables[table]["Tables_in_" + key]] =
+              await mysql.columnAPI.getColumnInfo(
+                tables[table]["Tables_in_" + key]
+              );
+            console.log(temp_dbs[key][tables[table]["Tables_in_" + key]]);
+            // would like to minimize info passed to gpt to make the string shorter and less straining
+          }
+          // temp_dbs[key] = tables.map((table: any) => table["Tables_in_" + key]);
+          // for (const table in tables) {
+          //   let result = await mysql.columnAPI.getColumnInfo(
+          //     tables[table]["Tables_in_" + key]
+          //   );
+          // }
+        }
+      }
+      console.log(JSON.stringify(temp_dbs));
+    } catch (error) {
+      console.log("Error fetching database and table info:", error);
+    }
+  }
+
   return (
     <div className="textarea">
       <textarea
@@ -53,7 +84,9 @@ export default function Editor({
         <button className="execution_buttons" onClick={executeQuery}>
           Execute
         </button>
-        <button className="execution_buttons">GPT</button>
+        <button className="execution_buttons" onClick={executeGPT}>
+          GPT
+        </button>
       </div>
     </div>
   );
