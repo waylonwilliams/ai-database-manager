@@ -25,6 +25,8 @@ function createWindow() {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
+    minHeight: 550,
+    minWidth: 400,
   })
   win.setBackgroundColor('#ffffff');
   win.setTitle("");

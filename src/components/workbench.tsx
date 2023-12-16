@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../App.css";
-// import Table from "./table";
+import Table from "./table";
 import Selector from "./file";
 import Editor from "./editor";
 
@@ -32,7 +32,7 @@ export default function Workbench({ SetMySQLLogin }: Props) {
           selectedDB={selectedDB}
           setTableResult={setTableResult}
         />
-        {/* <Table tableResult={tableResult} /> */}
+        <Table tableResult={tableResult} />
       </div>
     </div>
   );
