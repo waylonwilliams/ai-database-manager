@@ -104,7 +104,7 @@
   width: 60px;
   top: 15px;
   left: 15px;
-  margin-right: 26.5px;
+  margin-right: 26px;
 }
 
 .image-container img {
@@ -143,6 +143,7 @@
 
 .right {
   width: 33%;
+  position: relative;
 }
 
 /* return to this at some point */
@@ -175,7 +176,8 @@ disconnect button
 database button
   - selected class to change background color and highlight color
 table 
-fix scrollbar 
+fix scrollbar
+fix overflowing text, end with elipsses
 */
 
 .disconnect {
@@ -199,6 +201,7 @@ fix scrollbar
   padding: 2px;
   cursor: pointer;
   transition: background-color .3s;
+  text-overflow: ellipsis;
   /* border: 1px solid #bbbbbb;
   border-width: 0 0 1px 0; */
 }
@@ -220,6 +223,7 @@ fix scrollbar
 }
 
 .option-table {
+  text-overflow: ellipsis;
   font-size: 14px;
   margin-left: 10px;
   padding: 2px;
@@ -237,38 +241,52 @@ fix scrollbar
 /* editor and result */
 
 .field {
-  width: 100%;
-  height: 200px;
-  background-color: #61677A;
-  color: #ffffff;
+  width: 95%;
+  margin-left: 10px;
+  height: 30vh;
+  background-color: #eeeeee;
+  color: #000000;
   resize: none;
   font-family: monospace;
   font-size: 14px;
   outline: none;
+  border: none;
 }
 
 .field::placeholder {
-  color: #bfbdbd;
+  color: #cccccc;
 }
 
-.editor {
-  width: 100%;
-  height: 200px;
-  background-color: #61677A;
-  color: #ffffff;
-  resize: none;
-  font-family: monospace;
-  font-size: 14px;
-  outline: none;
+.textarea {
+  position: relative;
 }
 
-.editor::placeholder {
-  color: #bfbdbd;
+.buttons {
+  position: absolute;
+  bottom: 5%;
+  right: 4%;
 }
 
-.red {
-  color: #75b0ec;
+.execution_buttons {
+  padding: 5px;
+  margin: 2px;
+  background-color: #5090F1;
+  transition: background-color .3s;
+  border: none;
+  border-radius: 5px;
 }
+
+.execution_buttons:hover {
+  background-color: #3580ef;
+  text-decoration: none;
+}
+
+/* for editor styling */
+.keyword { 
+  color: #5090F1;
+}
+
+/* table */
 
 .nontable-result {
   color: #ffffff;

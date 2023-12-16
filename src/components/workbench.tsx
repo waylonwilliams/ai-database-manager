@@ -2,8 +2,7 @@ import { useState } from "react";
 import "../App.css";
 // import Table from "./table";
 import Selector from "./file";
-// import Editor from "./editor";
-// import Buttons from "./buttons";
+import Editor from "./editor";
 
 interface Props {
   SetMySQLLogin: any;
@@ -12,7 +11,7 @@ interface Props {
 export default function Workbench({ SetMySQLLogin }: Props) {
   const [tableResult, setTableResult] = useState("");
   const [selectedDB, setSelectedDB] = useState("");
-  // const [currentQuery, setCurrentQuery] = useState("");
+  const [currentQuery, setCurrentQuery] = useState("");
 
   return (
     <div className="row">
@@ -25,17 +24,16 @@ export default function Workbench({ SetMySQLLogin }: Props) {
           SetMySQLLogin={SetMySQLLogin}
         />
       </div>
-      {/* <div className="column left">
-        <Editor currentQuery={currentQuery} setCurrentQuery={setCurrentQuery} />
-        <Buttons
+      <div className="column left">
+        <Editor
           currentQuery={currentQuery}
-          setTableResult={setTableResult}
+          setCurrentQuery={setCurrentQuery}
           setSelectedDB={setSelectedDB}
           selectedDB={selectedDB}
-          SetMySQLLogin={SetMySQLLogin}
+          setTableResult={setTableResult}
         />
-        <Table tableResult={tableResult} />
-      </div> */}
+        {/* <Table tableResult={tableResult} /> */}
+      </div>
     </div>
   );
 }
