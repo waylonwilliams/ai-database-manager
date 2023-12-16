@@ -10,24 +10,26 @@ export default function Table({ tableResult }: Props) {
       return <div className="nontable-result">0 rows returned</div>;
     }
     return (
-      <table className="simple-table">
-        <thead>
-          <tr key={0}>
-            {Object.keys(tableResult[0]).map(
-              (property) => property !== "id" && <th>{property}</th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {tableResult.map((item, index) => (
-            <tr key={index}>
-              {Object.keys(item).map(
-                (property) => property !== "id" && <td>{item[property]}</td>
+      <div className="table-container">
+        <table className="simple-table">
+          <thead>
+            <tr key={0}>
+              {Object.keys(tableResult[0]).map(
+                (property) => property !== "id" && <th>{property}</th>
               )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tableResult.map((item, index) => (
+              <tr key={index}>
+                {Object.keys(item).map(
+                  (property) => property !== "id" && <td>{item[property]}</td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   } else if (tableResult instanceof Object) {
     if ("affectedRows" in tableResult) {
@@ -47,8 +49,6 @@ export default function Table({ tableResult }: Props) {
     if (tableResult === null) {
       return <div className="nontable-result">Failure, check your syntax</div>;
     }
-    return (
-      <div className="nontable-result">The result will be displayed here</div>
-    );
+    return <div className="nontable-result">Results displayed here</div>;
   }
 }

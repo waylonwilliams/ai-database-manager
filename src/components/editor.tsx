@@ -47,7 +47,7 @@ export default function Editor({
         onChange={(val) => {
           setCurrentQuery(val.target.value);
         }}
-        placeholder="Query your database here"
+        placeholder="SELECT * FROM..."
       />
       <div className="buttons">
         <button className="execution_buttons" onClick={executeQuery}>

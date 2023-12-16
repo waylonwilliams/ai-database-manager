@@ -257,6 +257,14 @@ fix overflowing text, end with elipsses
   color: #cccccc;
 }
 
+.field::-webkit-scrollbar {
+  width: 12px;
+}
+
+.field::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb9b;
+}
+
 .textarea {
   position: relative;
 }
@@ -299,19 +307,33 @@ fix overflowing text, end with elipsses
 
 .simple-table {
   border-collapse: collapse;
-  width: 101%;
-  background-color: #61677A;
-  height: 10px;
-  margin-top: 10px;
+  width: 96%;
+  margin: 10px;
+  background-color: #eeeeee;
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .simple-table th, .simple-table td {
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   text-align: left;
   font-size: 12px;
-  color: #ffffff;
+  color: #000000;
 }
 
 .simple-table th {
-  background-color: #41a0ff;
+  background-color: #5090F1;
+}
+
+.table-container {
+  height: 65vh;
+  overflow: auto;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb9b;
 }

@@ -42,7 +42,6 @@ contextBridge.exposeInMainWorld("mysql", {
               console.log("Failed query", err);
               return resolve(null);
             } else {
-              console.log("Query success");
               return resolve(result);
             }
           });
@@ -114,7 +113,6 @@ contextBridge.exposeInMainWorld("mysql", {
             console.log("Failed to get table columns info", table);
             resolve("err");
           } else {
-            console.log(result);
             resolve(result);
           }
         })
