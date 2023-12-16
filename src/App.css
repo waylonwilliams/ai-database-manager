@@ -138,11 +138,11 @@
 }
 
 .left {
-  width: 67%;
+  width: 72%;
 }
 
 .right {
-  width: 33%;
+  width: 28%;
   position: relative;
 }
 
@@ -241,7 +241,7 @@ fix overflowing text, end with elipsses
 /* editor and result */
 
 .field {
-  width: 95%;
+  width: 97%;
   margin-left: 10px;
   height: 30vh;
   background-color: #eeeeee;
@@ -272,7 +272,7 @@ fix overflowing text, end with elipsses
 .buttons {
   position: absolute;
   bottom: 5%;
-  right: 4%;
+  right: 3%;
 }
 
 .execution_buttons {
@@ -307,8 +307,9 @@ fix overflowing text, end with elipsses
 
 .simple-table {
   border-collapse: collapse;
-  width: 96%;
-  margin: 10px;
+  width: 98%;
+  margin-left: 10px;
+  margin-top: 10px;
   background-color: #eeeeee;
   color: #000000;
   font-family: Arial, Helvetica, sans-serif;
