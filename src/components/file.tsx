@@ -6,6 +6,7 @@ interface Props {
   setTableResult: any;
   selectedDB: any;
   setSelectedDB: any;
+  SetMySQLLogin: any;
 }
 
 // how to map actual tables and such
@@ -14,6 +15,7 @@ export default function Selector({
   setTableResult,
   selectedDB,
   setSelectedDB,
+  SetMySQLLogin,
 }: Props) {
   let [dbs, setdbs] = useState({});
   let tables = [];
@@ -77,31 +79,49 @@ export default function Selector({
   }, [tableResult]);
 
   return (
-    <div className="side-column">
-      {Object.keys(dbs).map((property) => (
-        <div key={property}>
-          {property === selectedDB && (
-            <div onClick={dbSelect} className="file-option-db-selected">
-              {property}
-            </div>
-          )}
-          {property !== selectedDB && (
-            <div onClick={dbSelect} className="file-option-db">
-              {property}
-            </div>
-          )}
-          {dbs[property].map((item: string) => (
-            <div
-              key={item}
-              id={property}
-              onClick={tableSelect}
-              className="file-option"
-            >
-              {item}
+    <div className="meow">
+      <div
+        className="disconnect"
+        onClick={() => {
+          SetMySQLLogin(false);
+        }}
+      >
+        Disconnect
+      </div>
+      <div className="selector">
+        <div className="joverflow">
+          {Object.keys(dbs).map((property) => (
+            <div key={property}>
+              {property === selectedDB && (
+                <div
+                  onClick={dbSelect}
+                  className="option-selected file-option-db"
+                >
+                  {property}
+                </div>
+              )}
+              {property !== selectedDB && (
+                <div
+                  onClick={dbSelect}
+                  className="option-deselected file-option-db"
+                >
+                  {property}
+                </div>
+              )}
+              {dbs[property].map((item: string) => (
+                <div
+                  key={item}
+                  id={property}
+                  onClick={tableSelect}
+                  className="option-table"
+                >
+                  {item}
+                </div>
+              ))}
             </div>
           ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }

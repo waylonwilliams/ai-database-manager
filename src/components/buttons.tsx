@@ -45,12 +45,6 @@ export default function Buttons({
         Execute
       </button>
       <button className="button2">GPT</button>
-      <button
-        className="button-disconnect"
-        onClick={() => SetMySQLLogin(false)}
-      >
-        Disconnect
-      </button>
     </div>
   );
 }
