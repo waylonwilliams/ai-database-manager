@@ -7,10 +7,9 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-const openAIKey = "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"; // set your OpenAI key here
+const openAIKey = "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"; // set your OpenAI key here
 if (openAIKey !== null) {
   var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
-  console.log(openai);
 }
 
 contextBridge.exposeInMainWorld("mysql", {
@@ -137,24 +136,23 @@ contextBridge.exposeInMainWorld("postgre", {
 
 contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
-    async makeRequest(database_info: any, request: string) {
+    async makeRequest(database_info: string, request: string) {
       const completion = await openai.chat.completions.create({
         messages: [
           {
             role: "system",
             content:
-              "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. Only respond when the prompt asks for a query, other prompts will provide information about the MySQL connection such as database names, table names, and table values.",
+              "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. The user will provide you with information about their MySQL connection including database names, table names, and column types.",
           },
           {
             role: "user",
-            content: `Here is some information about the MySQL connection: ${JSON.stringify(
-              database_info,
-            )}`,
+            content: `Here is some information about the MySQL connection: ${
+              database_info.slice(0, 4076)}`, // limits it to 4076 characters includes preface, preventing going over character limit, ideally let this cleanly go into another prompt
           },
           { role: "assistant", content: "" },
           {
             role: "user",
-            content: `Using the database information previously given, write a MySQL query that satisfies this prompt: ${request}`,
+            content: `Using the database information previously given, write a MySQL query that satisfies this request, respond solely with the query: ${request.slice(0, 4066)}`, // just for antibugging
           },
         ],
         model: "gpt-3.5-turbo",

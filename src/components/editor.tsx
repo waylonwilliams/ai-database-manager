@@ -49,22 +49,43 @@ export default function Editor({
         if (tables !== "err") {
           temp_dbs[key] = {};
           for (const table in tables) {
-            temp_dbs[key][tables[table]["Tables_in_" + key]] =
-              await mysql.columnAPI.getColumnInfo(
-                tables[table]["Tables_in_" + key]
+            const columns = await mysql.columnAPI.getColumnInfo(
+              tables[table]["Tables_in_" + key]
+            );
+            temp_dbs[key][tables[table]["Tables_in_" + key]] = [];
+            for (const col in columns) {
+              console.log(columns[col]);
+              console.log(`${columns[col].Field} ${columns[col].Type}`);
+              temp_dbs[key][tables[table]["Tables_in_" + key]].push(
+                `${columns[col].Field} ${columns[col].Type}`
               );
-            console.log(temp_dbs[key][tables[table]["Tables_in_" + key]]);
-            // would like to minimize info passed to gpt to make the string shorter and less straining
+            }
           }
-          // temp_dbs[key] = tables.map((table: any) => table["Tables_in_" + key]);
-          // for (const table in tables) {
-          //   let result = await mysql.columnAPI.getColumnInfo(
-          //     tables[table]["Tables_in_" + key]
-          //   );
-          // }
         }
       }
-      console.log(JSON.stringify(temp_dbs));
+
+      // execute the query
+      const generatedQuery = await gpt.gptAPI.makeRequest(
+        JSON.stringify(temp_dbs),
+        currentQuery
+      );
+      console.log("Here is the query: " + generatedQuery.message.content);
+      const result = await mysql.queryAPI.makeQuery(
+        generatedQuery.message.content
+      );
+      if (Array.isArray(result)) {
+        let i = 1;
+        for (let element of result) {
+          if ("id" in result) {
+            break;
+          }
+          element.id = i++;
+        }
+        setTableResult(result);
+      } else {
+        setTableResult(result); // failed query sends null anyways?
+      }
+      // execute the query
     } catch (error) {
       console.log("Error fetching database and table info:", error);
     }

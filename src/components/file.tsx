@@ -61,11 +61,6 @@ export default function Selector({
             temp_dbs[key] = tables.map(
               (table: Object) => table["Tables_in_" + key]
             );
-            // for (let meow in tables) {
-            //   let result = await mysql.columnAPI.getColumnInfo(
-            //     tables[meow]["Tables_in_" + key]
-            //   );
-            // }
           }
         }
         setdbs(temp_dbs);
