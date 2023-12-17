@@ -1,5 +1,5 @@
 import "../App.css";
-// import Newnew from "./neweditor";
+import Newnew from "./neweditor";
 
 interface Props {
   currentQuery: any;
@@ -105,7 +105,7 @@ export default function Editor({
 
   return (
     <>
-      {/* <Newnew></Newnew> */}
+      <Newnew></Newnew>
       <div className="textarea">
         <textarea
           className="field"
