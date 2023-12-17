@@ -9,10 +9,6 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-const openAIKey = "sk-";
-if (openAIKey !== null) {
-  var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
-}
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
@@ -135,7 +131,12 @@ contextBridge.exposeInMainWorld("postgre", {
 
 contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
-    async makeRequest(database_info: string, request: string) {
+    async makeRequest(database_info: string, request: string, openAIKey: any) {
+      if (openAIKey !== null) {
+        var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
+      } else {
+        return -1;
+      }
       try {
       const completion = await openai.chat.completions.create({
         messages: [
@@ -160,8 +161,8 @@ contextBridge.exposeInMainWorld("gpt", {
       console.log(completion.choices[0].message.content);
       return completion.choices[0];
     } catch (err) {
+      console.log(err);
       return -1;
-      // should set failed, maybe say need open ai key here, that would be good!
     }
     },
   },
@@ -169,7 +170,7 @@ contextBridge.exposeInMainWorld("gpt", {
 
 contextBridge.exposeInMainWorld("editor", {
   hlight: {
-    makeHighlight(code) {
+    makeHighlight(code: any) {
       return highlight(code, languages.sql);
     },
   },

@@ -2,9 +2,11 @@ import "../App.css";
 
 interface Props {
   tableResult: any;
+  openAIKey: any;
+  setOpenAIKey: (openAIKey: any) => void;
 }
 
-export default function Table({ tableResult }: Props) {
+export default function Table({ tableResult, openAIKey, setOpenAIKey }: Props) {
   if (Array.isArray(tableResult)) {
     if (tableResult.length === 0) {
       return <div className="nontable-result">0 rows returned</div>;
@@ -58,9 +60,20 @@ export default function Table({ tableResult }: Props) {
   } else if (tableResult === "need_key") {
     return (
       <div className="nontable-result">
-        To use the GPT feature you'll need an OpenAI API key, enter it here and
-        re-execute your prompt:{" "}
-        <textarea className="gpt-key-textarea"></textarea>
+        <div className="gpt-instructions">
+          To use the GPT feature you'll need an OpenAI API key. Enter your key
+          below and it will automatically be saved.
+        </div>
+        <input
+          type="text"
+          className="gpt-key-textarea"
+          value={openAIKey}
+          onChange={(val) => {
+            setOpenAIKey(val.target.value);
+            localStorage.setItem("openai", val.target.value);
+          }}
+          placeholder="sk-..."
+        />
       </div>
     );
   } else {

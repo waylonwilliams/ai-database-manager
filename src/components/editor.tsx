@@ -7,6 +7,7 @@ interface Props {
   setSelectedDB: (val: any) => void;
   selectedDB: any;
   setTableResult: (val: any) => void;
+  openAIKey: any;
 }
 
 export default function Editor({
@@ -15,6 +16,7 @@ export default function Editor({
   setSelectedDB,
   selectedDB,
   setTableResult,
+  openAIKey,
 }: Props) {
   async function executeQuery() {
     setTableResult("loading");
@@ -73,7 +75,8 @@ export default function Editor({
       }
       const generatedQuery = await gpt.gptAPI.makeRequest(
         JSON.stringify(temp_dbs),
-        currentQuery
+        currentQuery,
+        openAIKey
       );
       if (generatedQuery === -1) {
         setTableResult("need_key");
@@ -102,6 +105,7 @@ export default function Editor({
       }
     } catch (error) {
       console.log("Error fetching database and table info:", error);
+      setTableResult("need_key");
     }
   }
 

@@ -313,6 +313,25 @@ fix overflowing text, end with elipsses
 
 /* table */
 
+.gpt-instructions {
+  margin: 10px;
+}
+
+.gpt-key-textarea {
+  padding: 5px 10px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #000000;
+  background-color: #eeeeee;
+  border: 1px solid #dddddd;
+  width: 78.5%;
+  min-width: 410px;
+  border-radius: 5px;
+  outline: none;
+  resize: none;
+  margin: 10px;
+}
+
 .nontable-result {
   color: #000000;
   font-size: 14px;

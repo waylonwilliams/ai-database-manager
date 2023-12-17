@@ -13,6 +13,7 @@ export default function Workbench({ SetMySQLLogin, setLoading }: Props) {
   const [tableResult, setTableResult] = useState("");
   const [selectedDB, setSelectedDB] = useState("");
   const [currentQuery, setCurrentQuery] = useState("");
+  const [openAIKey, setOpenAIKey] = useState(localStorage.getItem("openai"));
 
   return (
     <div className="row">
@@ -33,8 +34,9 @@ export default function Workbench({ SetMySQLLogin, setLoading }: Props) {
           setSelectedDB={setSelectedDB}
           selectedDB={selectedDB}
           setTableResult={setTableResult}
+          openAIKey={openAIKey}
         />
-        <Table tableResult={tableResult} />
+        <Table tableResult={tableResult} setOpenAIKey={setOpenAIKey} />
       </div>
     </div>
   );
