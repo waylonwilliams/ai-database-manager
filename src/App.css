@@ -294,11 +294,6 @@ fix overflowing text, end with elipsses
   text-decoration: none;
 }
 
-/* for editor styling */
-.keyword { 
-  color: #5090F1;
-}
-
 /* table */
 
 .nontable-result {

@@ -1,4 +1,5 @@
 import "../App.css";
+// import Newnew from "./neweditor";
 
 interface Props {
   currentQuery: any;
@@ -23,7 +24,7 @@ export default function Editor({
       currentQuery.startsWith("use ")
     ) {
       setSelectedDB(currentQuery.slice(4));
-    }
+    } // else and include line below? minimize queries made?
     let result = await mysql.queryAPI.makeQuery("USE " + selectedDB); // 2 queries does make this less efficient, but solves the issue, i could be more organized though
     result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
@@ -103,23 +104,26 @@ export default function Editor({
   }
 
   return (
-    <div className="textarea">
-      <textarea
-        className="field"
-        value={currentQuery}
-        onChange={(val) => {
-          setCurrentQuery(val.target.value);
-        }}
-        placeholder="SELECT * FROM..."
-      />
-      <div className="buttons">
-        <button className="execution_buttons" onClick={executeQuery}>
-          Execute
-        </button>
-        <button className="execution_buttons" onClick={executeGPT}>
-          GPT
-        </button>
+    <>
+      {/* <Newnew></Newnew> */}
+      <div className="textarea">
+        <textarea
+          className="field"
+          value={currentQuery}
+          onChange={(val) => {
+            setCurrentQuery(val.target.value);
+          }}
+          placeholder="SELECT * FROM..."
+        />
+        <div className="buttons">
+          <button className="execution_buttons" onClick={executeQuery}>
+            Execute
+          </button>
+          <button className="execution_buttons" onClick={executeGPT}>
+            GPT
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

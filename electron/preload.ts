@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
 import OpenAI from "openai";
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-sql';
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
@@ -162,6 +164,15 @@ contextBridge.exposeInMainWorld("gpt", {
     },
   },
 });
+
+contextBridge.exposeInMainWorld("editor", {
+  hlight: {
+    makeHighlight(code) {
+      return highlight(code, languages.sql);
+    },
+  },
+})
+
 
 // -----------------------------------------------------------------
 
