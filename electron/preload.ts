@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-const openAIKey = "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"; // set your OpenAI key here
+const openAIKey = "sk-";
 if (openAIKey !== null) {
   var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
 }
@@ -26,18 +26,15 @@ contextBridge.exposeInMainWorld("mysql", {
         });
         mysqlConnector.connect(function (err: Error) {
           if (err) {
-            console.log("failed to connect");
             resolve(null);
           } else {
-            resolve(mysqlConnector);
-          } // I am considering not returning anything, just establishing and leaving the connection on the backend
+            resolve(1); // previously returned the connector but that isn't necessary?
+          }
         });
       });
     },
   },
   queryAPI: {
-    // You can only make 1 line of query at a time
-    // I need to handle mutli lines by looping through the string split at the semicolons
     makeQuery(query: string) {
       return new Promise((resolve) => {
         if (mysqlConnector !== null) {
@@ -62,7 +59,7 @@ contextBridge.exposeInMainWorld("mysql", {
             "SHOW DATABASES",
             function (err: Error, result: any) {
               if (err) {
-                console.log("Failed to get file data");
+                console.log("Failed to get list of databases");
                 resolve({});
               } else {
                 for (let element of result) {
@@ -139,6 +136,7 @@ contextBridge.exposeInMainWorld("postgre", {
 contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
     async makeRequest(database_info: string, request: string) {
+      try {
       const completion = await openai.chat.completions.create({
         messages: [
           {
@@ -161,6 +159,10 @@ contextBridge.exposeInMainWorld("gpt", {
       });
       console.log(completion.choices[0].message.content);
       return completion.choices[0];
+    } catch (err) {
+      return -1;
+      // should set failed, maybe say need open ai key here, that would be good!
+    }
     },
   },
 });

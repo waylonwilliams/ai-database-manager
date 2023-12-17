@@ -51,9 +51,10 @@ export default function Selector({
   const dbSelect = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
       setSelectedDB(e.currentTarget.innerHTML);
-      let result = await mysql.queryAPI.makeQuery(
-        "USE " + e.currentTarget.innerHTML
-      );
+      // removing below because I call use before any query anyways
+      // let result = await mysql.queryAPI.makeQuery(
+      //   "USE " + e.currentTarget.innerHTML
+      // );
     },
     [setSelectedDB]
   );

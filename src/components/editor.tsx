@@ -19,13 +19,13 @@ export default function Editor({
   async function executeQuery() {
     setTableResult("loading");
     if (
-      currentQuery.startsWith("USE ") || // temporary fix, ideally force uppercase and just rely on that
+      currentQuery.startsWith("USE ") || // there are many other valid ways to call use, it won't set selected db if you do it one of those ways
       currentQuery.startsWith("Use ") ||
       currentQuery.startsWith("use ")
     ) {
       setSelectedDB(currentQuery.slice(4));
-    } // else and include line below? minimize queries made?
-    let result = await mysql.queryAPI.makeQuery("USE " + selectedDB); // 2 queries does make this less efficient, but solves the issue, i could be more organized though
+    }
+    let result = await mysql.queryAPI.makeQuery("USE " + selectedDB);
     result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
       console.log(result);
@@ -44,7 +44,7 @@ export default function Editor({
       }
       setTableResult(result);
     } else {
-      setTableResult(result); // failed query sends null anyways?
+      setTableResult(result);
     }
   }
 
@@ -75,6 +75,9 @@ export default function Editor({
         JSON.stringify(temp_dbs),
         currentQuery
       );
+      if (generatedQuery === -1) {
+        setTableResult("need_key");
+      }
       setCurrentQuery(generatedQuery.message.content);
       const result = await mysql.queryAPI.makeQuery(
         generatedQuery.message.content

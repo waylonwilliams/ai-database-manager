@@ -13,6 +13,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
   const [pass, setPass] = useState("hahahddd%55^jjd9");
   const [port, setPort] = useState("3306");
   const [toggle, setToggle] = useState(false); // left side (mysql)
+  const [failed, setFailed] = useState<boolean>(false);
 
   useEffect(() => {
     async function reconnect() {
@@ -66,7 +67,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
       SetMySQLLogin(true);
     } else {
       console.log("connecting failed, try logging in again");
-      // raise some kind of toast here
+      setFailed(true);
     }
   }
 
@@ -148,6 +149,9 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
           placeholder="Port (3306 is default for localhost)"
         />{" "}
         <br />
+        {failed && (
+          <div className="failed-login">Connection failed, try again</div>
+        )}
         <button className="db-connect-button" onClick={attemptLogin}>
           Connect
         </button>

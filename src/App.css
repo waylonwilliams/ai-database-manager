@@ -9,6 +9,7 @@
 }
 
 .login-div {
+  position: relative;
   width: 40%;
   max-width: 320px;
   min-width: 320px;
@@ -39,7 +40,7 @@
 .db-connect-button {
   margin-bottom: 13%;
   padding: 5px;
-  margin-top: 5%;
+  margin-top: 9%;
   font-size: 14px;
   color: #000000;
   background-color: #dddddd;
@@ -125,6 +126,14 @@
 
 .selected {
   opacity: 0;
+}
+
+.failed-login {
+  position: absolute;
+  font-size: 10px;
+  color: rgb(177, 79, 79);
+  top: 78.5%;
+  left: 31%;
 }
 
 /* query page structure */

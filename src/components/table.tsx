@@ -55,6 +55,14 @@ export default function Table({ tableResult }: Props) {
         </div>
       </div>
     );
+  } else if (tableResult === "need_key") {
+    return (
+      <div className="nontable-result">
+        To use the GPT feature you'll need an OpenAI API key, enter it here and
+        re-execute your prompt:{" "}
+        <textarea className="gpt-key-textarea"></textarea>
+      </div>
+    );
   } else {
     if (tableResult === null) {
       return <div className="nontable-result">Failure, check your syntax</div>;
