@@ -294,7 +294,6 @@ fix overflowing text, end with elipsses
   text-decoration: none;
 }
 
-/* what luck haha */
 .keyword { 
   color: #5090F1;
 }

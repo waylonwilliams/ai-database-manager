@@ -1,12 +1,20 @@
 import React from "react";
 import Editor from "react-simple-code-editor";
 
-export default function Newnew() {
+interface Props {
+  currentQuery: any;
+  setCurrentQuery: () => void;
+}
+
+export default function HighlightEditor({
+  currentQuery,
+  setCurrentQuery,
+}: Props) {
   const [code, setCode] = React.useState(`select * from x where x = 5`);
   return (
     <Editor
       value={code}
-      onValueChange={(code) => setCode(code)}
+      onValueChange={(code) => {setCode(code); }
       highlight={(code) => editor.hlight.makeHighlight(code)}
       padding={2}
       style={{
@@ -20,7 +28,9 @@ export default function Newnew() {
         fontSize: "14px",
         outline: "none",
         border: "none",
+        position: "relative",
       }}
+      placeholder="SELECT * FROM ..."
     />
   );
 }

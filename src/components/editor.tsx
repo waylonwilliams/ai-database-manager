@@ -1,5 +1,5 @@
 import "../App.css";
-import Newnew from "./neweditor";
+import HightlightEditor from "./importEditor";
 
 interface Props {
   currentQuery: any;
@@ -105,7 +105,7 @@ export default function Editor({
 
   return (
     <>
-      <Newnew></Newnew>
+      <HightlightEditor />
       <div className="textarea">
         <textarea
           className="field"
