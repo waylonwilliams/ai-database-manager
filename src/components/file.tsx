@@ -7,6 +7,7 @@ interface Props {
   selectedDB: any;
   setSelectedDB: any;
   SetMySQLLogin: any;
+  setLoading: (loading: boolean) => void;
 }
 
 // how to map actual tables and such
@@ -16,6 +17,7 @@ export default function Selector({
   selectedDB,
   setSelectedDB,
   SetMySQLLogin,
+  setLoading,
 }: Props) {
   let [dbs, setdbs] = useState({});
   let tables = [];
@@ -85,6 +87,7 @@ export default function Selector({
       <div
         className="disconnect"
         onClick={() => {
+          setLoading(false);
           SetMySQLLogin(false);
         }}
       >

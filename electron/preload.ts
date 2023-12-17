@@ -159,7 +159,6 @@ contextBridge.exposeInMainWorld("gpt", {
         ],
         model: "gpt-3.5-turbo",
       });
-      console.log(completion.choices[0]);
       return completion.choices[0];
     },
   },
@@ -168,7 +167,6 @@ contextBridge.exposeInMainWorld("gpt", {
 contextBridge.exposeInMainWorld("editor", {
   hlight: {
     makeHighlight(code) {
-      console.log(code);
       return highlight(code, languages.sql);
     },
   },

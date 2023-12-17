@@ -3,18 +3,23 @@ import { useEffect, useState } from "react";
 
 interface Props {
   SetMySQLLogin: (val: boolean) => void;
+  loading: boolean;
+  setLoading: (val: boolean) => void;
 }
 
-export default function Login({ SetMySQLLogin }: Props) {
+export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
   const [host, setHost] = useState("localhost");
   const [user, setUser] = useState("root");
   const [pass, setPass] = useState("hahahddd%55^jjd9");
   const [port, setPort] = useState("3306");
   const [toggle, setToggle] = useState(false); // left side (mysql)
-  const [loading, setLoading] = useState(true); // true means still loading
 
   useEffect(() => {
     async function reconnect() {
+      if (!loading) {
+        return;
+      }
+      console.log("Still getting from local storage");
       const storedHost = localStorage.getItem("host");
       const storedUser = localStorage.getItem("user");
       const storedPass = localStorage.getItem("pass");

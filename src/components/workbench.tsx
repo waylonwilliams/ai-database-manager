@@ -6,9 +6,10 @@ import Editor from "./editor";
 
 interface Props {
   SetMySQLLogin: any;
+  setLoading: (loading: boolean) => void;
 }
 
-export default function Workbench({ SetMySQLLogin }: Props) {
+export default function Workbench({ SetMySQLLogin, setLoading }: Props) {
   const [tableResult, setTableResult] = useState("");
   const [selectedDB, setSelectedDB] = useState("");
   const [currentQuery, setCurrentQuery] = useState("");
@@ -22,6 +23,7 @@ export default function Workbench({ SetMySQLLogin }: Props) {
           selectedDB={selectedDB}
           setSelectedDB={setSelectedDB}
           SetMySQLLogin={SetMySQLLogin}
+          setLoading={setLoading}
         />
       </div>
       <div className="column left">
