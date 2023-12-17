@@ -27,6 +27,7 @@ export default function Editor({
     let result = await mysql.queryAPI.makeQuery("USE " + selectedDB); // 2 queries does make this less efficient, but solves the issue, i could be more organized though
     result = await mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
+      console.log(result);
       let i = 1;
       for (let element of result) {
         if ("id" in result) {

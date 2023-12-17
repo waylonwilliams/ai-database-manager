@@ -13,9 +13,10 @@ export default function Table({ tableResult }: Props) {
       <div className="table-container">
         <table className="simple-table">
           <thead>
-            <tr key={0}>
+            <tr>
               {Object.keys(tableResult[0]).map(
-                (property) => property !== "id" && <th>{property}</th>
+                (property, index) =>
+                  property !== "id" && <th key={index}>{property}</th>
               )}
             </tr>
           </thead>
@@ -23,7 +24,8 @@ export default function Table({ tableResult }: Props) {
             {tableResult.map((item, index) => (
               <tr key={index}>
                 {Object.keys(item).map(
-                  (property) => property !== "id" && <td>{item[property]}</td>
+                  (property, index2) =>
+                    property !== "id" && <td key={index2}>{item[property]}</td>
                 )}
               </tr>
             ))}
