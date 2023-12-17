@@ -86,7 +86,6 @@ export default function Editor({
             // turns objects into strings so the table can display them
             if (typeof element[attribute] === "object") {
               element[attribute] = JSON.stringify(element[attribute]);
-              console.log(element[attribute]);
             }
           }
           if ("id" in result) {
