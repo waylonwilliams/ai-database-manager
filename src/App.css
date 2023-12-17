@@ -242,6 +242,10 @@ fix overflowing text, end with elipsses
 
 /* editor and result */
 
+.clean {
+  outline: none;
+}
+
 .field {
   width: 97%;
   margin-left: 10px;

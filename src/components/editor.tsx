@@ -105,15 +105,10 @@ export default function Editor({
 
   return (
     <>
-      <HightlightEditor />
       <div className="textarea">
-        <textarea
-          className="field"
-          value={currentQuery}
-          onChange={(val) => {
-            setCurrentQuery(val.target.value);
-          }}
-          placeholder="SELECT * FROM..."
+        <HightlightEditor
+          currentQuery={currentQuery}
+          setCurrentQuery={setCurrentQuery}
         />
         <div className="buttons">
           <button className="execution_buttons" onClick={executeQuery}>

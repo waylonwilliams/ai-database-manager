@@ -3,19 +3,18 @@ import Editor from "react-simple-code-editor";
 
 interface Props {
   currentQuery: any;
-  setCurrentQuery: () => void;
+  setCurrentQuery: (currentQuery: any) => void;
 }
 
 export default function HighlightEditor({
   currentQuery,
   setCurrentQuery,
 }: Props) {
-  const [code, setCode] = React.useState(`select * from x where x = 5`);
   return (
     <Editor
-      value={code}
-      onValueChange={(code) => {setCode(code); }
-      highlight={(code) => editor.hlight.makeHighlight(code)}
+      value={currentQuery}
+      onValueChange={(currentQuery) => setCurrentQuery(currentQuery)}
+      highlight={(currentQuery) => editor.hlight.makeHighlight(currentQuery)}
       padding={2}
       style={{
         width: "97%",
@@ -26,10 +25,10 @@ export default function HighlightEditor({
         resize: "none",
         fontFamily: "monospace",
         fontSize: "14px",
-        outline: "none",
         border: "none",
         position: "relative",
       }}
+      textareaClassName="field"
       placeholder="SELECT * FROM ..."
     />
   );

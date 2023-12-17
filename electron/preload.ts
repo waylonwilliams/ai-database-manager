@@ -168,6 +168,7 @@ contextBridge.exposeInMainWorld("gpt", {
 contextBridge.exposeInMainWorld("editor", {
   hlight: {
     makeHighlight(code) {
+      console.log(code);
       return highlight(code, languages.sql);
     },
   },
