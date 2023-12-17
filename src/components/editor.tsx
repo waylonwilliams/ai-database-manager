@@ -75,10 +75,10 @@ export default function Editor({
         JSON.stringify(temp_dbs),
         currentQuery
       );
+      setCurrentQuery(generatedQuery.message.content);
       const result = await mysql.queryAPI.makeQuery(
         generatedQuery.message.content
       );
-      console.log(result);
       if (Array.isArray(result)) {
         let i = 1;
         for (let element of result) {

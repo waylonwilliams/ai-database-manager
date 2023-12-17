@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-const openAIKey = "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"; // set your OpenAI key here
+const openAIKey = "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"; // set your OpenAI key here
 if (openAIKey !== null) {
   var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
 }
@@ -159,7 +159,7 @@ contextBridge.exposeInMainWorld("gpt", {
         ],
         model: "gpt-3.5-turbo",
       });
-      console.log("GPT QUERY: ", completion.choices[0].message.content);
+      console.log(completion.choices[0].message.content);
       return completion.choices[0];
     },
   },
