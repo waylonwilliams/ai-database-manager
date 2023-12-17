@@ -30,6 +30,12 @@ export default function Editor({
       console.log(result);
       let i = 1;
       for (let element of result) {
+        for (const attribute in element) {
+          // turns objects into strings so the table can display them
+          if (typeof element[attribute] === "object") {
+            element[attribute] = JSON.stringify(element[attribute]);
+          }
+        }
         if ("id" in result) {
           break;
         }
@@ -71,9 +77,17 @@ export default function Editor({
       const result = await mysql.queryAPI.makeQuery(
         generatedQuery.message.content
       );
+      console.log(result);
       if (Array.isArray(result)) {
         let i = 1;
         for (let element of result) {
+          for (const attribute in element) {
+            // turns objects into strings so the table can display them
+            if (typeof element[attribute] === "object") {
+              element[attribute] = JSON.stringify(element[attribute]);
+              console.log(element[attribute]);
+            }
+          }
           if ("id" in result) {
             break;
           }

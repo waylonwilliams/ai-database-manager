@@ -29,6 +29,12 @@ export default function Selector({
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {
+        for (const attribute in element) {
+          // turns objects into strings so the table can display them
+          if (typeof element[attribute] === "object") {
+            element[attribute] = JSON.stringify(element[attribute]);
+          }
+        }
         if ("id" in result) {
           break;
         }
@@ -75,7 +81,7 @@ export default function Selector({
   }, [tableResult]);
 
   return (
-    <div className="meow">
+    <>
       <div
         className="disconnect"
         onClick={() => {
@@ -118,6 +124,6 @@ export default function Selector({
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }
