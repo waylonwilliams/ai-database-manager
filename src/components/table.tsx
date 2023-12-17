@@ -45,6 +45,14 @@ export default function Table({ tableResult }: Props) {
         </div>
       );
     }
+  } else if (tableResult === "loading") {
+    return (
+      <div className="table-container">
+        <div className="loading-container">
+          <img className="loading-img" src="../../files/loading.jpeg" />
+        </div>
+      </div>
+    );
   } else {
     if (tableResult === null) {
       return <div className="nontable-result">Failure, check your syntax</div>;

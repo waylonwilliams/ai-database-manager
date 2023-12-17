@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-const openAIKey = "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"; // set your OpenAI key here
+const openAIKey = "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"; // set your OpenAI key here
 if (openAIKey !== null) {
   var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
 }

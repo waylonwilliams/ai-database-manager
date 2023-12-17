@@ -16,6 +16,7 @@ export default function Editor({
   setTableResult,
 }: Props) {
   async function executeQuery() {
+    setTableResult("loading");
     if (
       currentQuery.startsWith("USE ") || // temporary fix, ideally force uppercase and just rely on that
       currentQuery.startsWith("Use ") ||
@@ -40,6 +41,7 @@ export default function Editor({
   }
 
   async function executeGPT() {
+    setTableResult("loading");
     let tables = [];
     let temp_dbs = {};
     try {
@@ -54,8 +56,6 @@ export default function Editor({
             );
             temp_dbs[key][tables[table]["Tables_in_" + key]] = [];
             for (const col in columns) {
-              console.log(columns[col]);
-              console.log(`${columns[col].Field} ${columns[col].Type}`);
               temp_dbs[key][tables[table]["Tables_in_" + key]].push(
                 `${columns[col].Field} ${columns[col].Type}`
               );
@@ -63,13 +63,10 @@ export default function Editor({
           }
         }
       }
-
-      // execute the query
       const generatedQuery = await gpt.gptAPI.makeRequest(
         JSON.stringify(temp_dbs),
         currentQuery
       );
-      console.log("Here is the query: " + generatedQuery.message.content);
       const result = await mysql.queryAPI.makeQuery(
         generatedQuery.message.content
       );
@@ -83,9 +80,8 @@ export default function Editor({
         }
         setTableResult(result);
       } else {
-        setTableResult(result); // failed query sends null anyways?
+        setTableResult(result);
       }
-      // execute the query
     } catch (error) {
       console.log("Error fetching database and table info:", error);
     }

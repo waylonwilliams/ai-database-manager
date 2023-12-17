@@ -52,6 +52,9 @@ export default function Selector({
 
   useEffect(() => {
     const fetchData = async () => {
+      if (tableResult === "loading") {
+        return;
+      }
       let temp_dbs = {};
       try {
         temp_dbs = await mysql.dbTableAPI.getDbTableInfo();
