@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   SetMySQLLogin: (val: boolean) => void;
@@ -11,8 +11,46 @@ export default function Login({ SetMySQLLogin }: Props) {
   const [pass, setPass] = useState("hahahddd%55^jjd9");
   const [port, setPort] = useState("3306");
   const [toggle, setToggle] = useState(false); // left side (mysql)
+  const [loading, setLoading] = useState(true); // true means still loading
+
+  useEffect(() => {
+    async function reconnect() {
+      const storedHost = localStorage.getItem("host");
+      const storedUser = localStorage.getItem("user");
+      const storedPass = localStorage.getItem("pass");
+      const storedPort = localStorage.getItem("port");
+      const storedDB = localStorage.getItem("db");
+      if (
+        storedHost === null ||
+        storedPass === null ||
+        storedPort === null ||
+        storedUser === null ||
+        storedDB === null
+      ) {
+        return;
+      }
+      const result = await mysql.connectAPI.connect(
+        storedHost,
+        storedUser,
+        storedPass,
+        Number(storedPort)
+      );
+      if (result != null) {
+        SetMySQLLogin(true);
+      } else {
+        setLoading(false);
+      }
+    }
+    reconnect();
+  }, []);
 
   async function attemptLogin() {
+    localStorage.setItem("host", host);
+    localStorage.setItem("user", user);
+    localStorage.setItem("pass", pass);
+    localStorage.setItem("port", port);
+    localStorage.setItem("db", toggle.toString());
+
     const result = await mysql.connectAPI.connect(
       host,
       user,
@@ -36,7 +74,9 @@ export default function Login({ SetMySQLLogin }: Props) {
       // handle false toggle thigns here
     }
   }
-
+  if (loading) {
+    return <></>;
+  }
   return (
     <div className="container">
       <div className="login-div">

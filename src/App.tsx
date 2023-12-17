@@ -4,8 +4,7 @@ import Login from "./components/login";
 import { useState } from "react";
 
 export default function App() {
-  const [MySQLLogin, SetMySQLLogin] = useState<boolean>(false); // how to type this?
-  // {MySQLLogin === false && <Login SetMySQLLogin={SetMySQLLogin} />}
+  const [MySQLLogin, SetMySQLLogin] = useState<boolean>(false);
   return (
     <>
       {MySQLLogin === false && <Login SetMySQLLogin={SetMySQLLogin} />}
