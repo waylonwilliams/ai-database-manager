@@ -26,8 +26,8 @@ export default function Selector({
     const curDB = e.currentTarget.id;
     const curTable = e.currentTarget.innerHTML;
     setSelectedDB(curDB);
-    let result = await mysql.queryAPI.makeQuery("USE " + curDB);
-    result = await mysql.queryAPI.makeQuery("SELECT * FROM " + curTable);
+    let result = await window.mysql.queryAPI.makeQuery("USE " + curDB);
+    result = await window.mysql.queryAPI.makeQuery("SELECT * FROM " + curTable);
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {
@@ -66,9 +66,9 @@ export default function Selector({
       }
       let temp_dbs = {};
       try {
-        temp_dbs = await mysql.dbTableAPI.getDbTableInfo();
+        temp_dbs = await window.mysql.dbTableAPI.getDbTableInfo();
         for (let key in temp_dbs) {
-          tables = await mysql.tableAPI.getTableInfo(key);
+          tables = await window.mysql.tableAPI.getTableInfo(key);
           if (tables !== "err") {
             temp_dbs[key] = tables.map(
               (table: Object) => table["Tables_in_" + key]

@@ -35,7 +35,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
       ) {
         return;
       }
-      const result = await mysql.connectAPI.connect(
+      const result = await window.mysql.connectAPI.connect(
         storedHost,
         storedUser,
         storedPass,
@@ -57,7 +57,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
     localStorage.setItem("port", port);
     localStorage.setItem("db", toggle.toString());
 
-    const result = await mysql.connectAPI.connect(
+    const result = await window.mysql.connectAPI.connect(
       host,
       user,
       pass,

@@ -49,7 +49,7 @@ contextBridge.exposeInMainWorld("mysql", {
   dbTableAPI: {
     getDbTableInfo() {
       return new Promise((resolve) => {
-        let post: Object = {};
+        let post: { [key: string]: any[] } = {};
         if (mysqlConnector !== null) {
           mysqlConnector.query(
             "SHOW DATABASES",
