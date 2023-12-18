@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@electron/remote": "^2.1.1",
     "html-react-parser": "^5.0.7",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.5",

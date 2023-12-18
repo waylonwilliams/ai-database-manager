@@ -36,7 +36,11 @@ export default function Workbench({ SetMySQLLogin, setLoading }: Props) {
           setTableResult={setTableResult}
           openAIKey={openAIKey}
         />
-        <Table tableResult={tableResult} setOpenAIKey={setOpenAIKey} />
+        <Table
+          tableResult={tableResult}
+          setOpenAIKey={setOpenAIKey}
+          openAIKey={openAIKey}
+        />
       </div>
     </div>
   );

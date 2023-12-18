@@ -27,8 +27,8 @@ export default function Editor({
     ) {
       setSelectedDB(currentQuery.slice(4));
     }
-    let result = await mysql.queryAPI.makeQuery("USE " + selectedDB);
-    result = await mysql.queryAPI.makeQuery(currentQuery);
+    let result = await window.mysql.queryAPI.makeQuery("USE " + selectedDB);
+    result = await window.mysql.queryAPI.makeQuery(currentQuery);
     if (Array.isArray(result)) {
       console.log(result);
       let i = 1;
@@ -55,13 +55,13 @@ export default function Editor({
     let tables = [];
     let temp_dbs = {};
     try {
-      temp_dbs = await mysql.dbTableAPI.getDbTableInfo();
+      temp_dbs = await window.mysql.dbTableAPI.getDbTableInfo();
       for (const key in temp_dbs) {
-        tables = await mysql.tableAPI.getTableInfo(key);
+        tables = await window.mysql.tableAPI.getTableInfo(key);
         if (tables !== "err") {
           temp_dbs[key] = {};
           for (const table in tables) {
-            const columns = await mysql.columnAPI.getColumnInfo(
+            const columns = await window.mysql.columnAPI.getColumnInfo(
               tables[table]["Tables_in_" + key]
             );
             temp_dbs[key][tables[table]["Tables_in_" + key]] = [];
@@ -73,7 +73,7 @@ export default function Editor({
           }
         }
       }
-      const generatedQuery = await gpt.gptAPI.makeRequest(
+      const generatedQuery = await window.gpt.gptAPI.makeRequest(
         JSON.stringify(temp_dbs),
         currentQuery,
         openAIKey
@@ -82,7 +82,7 @@ export default function Editor({
         setTableResult("need_key");
       }
       setCurrentQuery(generatedQuery.message.content);
-      const result = await mysql.queryAPI.makeQuery(
+      const result = await window.mysql.queryAPI.makeQuery(
         generatedQuery.message.content
       );
       if (Array.isArray(result)) {

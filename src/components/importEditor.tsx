@@ -1,4 +1,3 @@
-import React from "react";
 import Editor from "react-simple-code-editor";
 
 interface Props {
@@ -14,7 +13,9 @@ export default function HighlightEditor({
     <Editor
       value={currentQuery}
       onValueChange={(currentQuery) => setCurrentQuery(currentQuery)}
-      highlight={(currentQuery) => editor.hlight.makeHighlight(currentQuery)}
+      highlight={(currentQuery) =>
+        window.editor.hlight.makeHighlight(currentQuery)
+      }
       padding={2}
       style={{
         width: "97%",
