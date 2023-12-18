@@ -16,3 +16,11 @@ I was previously using MySQL workbench for managing databases used in my project
 * Successful queries display results in table view or response message; failed queries return an error message to support debugging
 * GPT support for querying databases in plain English
 * (What I consider) a nicely styled interface, making it easy to understand the displayed data
+
+## how to use
+
+As this is still somewhat of a WIP I haven't built the executables and probably won't until I am beginning to move on. For now you can clone this repository and run the app locally.
+
+```git clone https://github.com/waylonwilliams/min_mysql.git
+cd min_mysql
+npm run dev```
