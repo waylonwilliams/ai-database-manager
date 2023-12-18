@@ -19,7 +19,7 @@ export default function Selector({
   SetMySQLLogin,
   setLoading,
 }: Props) {
-  let [dbs, setdbs] = useState({});
+  let [dbs, setdbs] = useState<{ [key: string]: string[] }>({});
   let tables = [];
 
   async function tableSelect(e: React.MouseEvent<HTMLDivElement>) {
@@ -51,10 +51,6 @@ export default function Selector({
   const dbSelect = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
       setSelectedDB(e.currentTarget.innerHTML);
-      // removing below because I call use before any query anyways
-      // let result = await mysql.queryAPI.makeQuery(
-      //   "USE " + e.currentTarget.innerHTML
-      // );
     },
     [setSelectedDB]
   );
@@ -64,14 +60,14 @@ export default function Selector({
       if (tableResult === "loading") {
         return;
       }
-      let temp_dbs = {};
+      let temp_dbs: { [key: string]: any } = {};
       try {
         temp_dbs = await window.mysql.dbTableAPI.getDbTableInfo();
         for (let key in temp_dbs) {
           tables = await window.mysql.tableAPI.getTableInfo(key);
           if (tables !== "err") {
             temp_dbs[key] = tables.map(
-              (table: Object) => table["Tables_in_" + key]
+              (table: { [key: string]: any }) => table["Tables_in_" + key]
             );
           }
         }
