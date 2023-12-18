@@ -19,7 +19,7 @@ I was previously using MySQL workbench for managing databases used in my project
 
 ## how to use
 
-As this is still somewhat of a WIP I haven't built the executables and probably won't until I am beginning to move on. For now you can clone this repository and run the app locally.
+As this is still somewhat of a WIP, I haven't built the executables and probably won't until I begin to move on to something else. For now, you can clone this repository and run the app locally.
 
 ```
 git clone https://github.com/waylonwilliams/min_mysql.git
