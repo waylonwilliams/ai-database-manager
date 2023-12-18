@@ -9,10 +9,10 @@ I was previously using MySQL workbench for managing databases used in my project
 ## features
 
 * Connects to local or remote MySQL or PostgreSQL databases
-* Stores login information to provide quicker access to last used connection
+* Stores login information locally to provide quicker access to the last used connection
 * Dynamic tree view for databases and tables
-* Runs "USE" and "SELECT * FROM" queries by clicking on database or table name, respectively
-* SQL editor with text hightlighting
-* Successful queries display results in table view or response message, failed queries return error message to support debugging
-* GPT support to query databases in plain english
-* (What I consider) a nicely styled interface, making it easy to understand the data displayed
+* Runs "USE" and "SELECT * FROM" queries by clicking on a database or table name, respectively
+* SQL editor with text highlighting
+* Successful queries display results in table view or response message; failed queries return an error message to support debugging
+* GPT support for querying databases in plain English
+* (What I consider) a nicely styled interface, making it easy to understand the displayed data
