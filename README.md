@@ -24,5 +24,6 @@ As this is still somewhat of a WIP I haven't built the executables and probably 
 ```
 git clone https://github.com/waylonwilliams/min_mysql.git
 cd min_mysql
+npm install
 npm run dev
 ```
