@@ -5,3 +5,14 @@ https://github.com/waylonwilliams/min_mysql/assets/145303505/d008d7d8-bb87-48e0-
 ## motivation
 
 I was previously using MySQL workbench for managing databases used in my projects. However, for the relatively small amount of data and tables I am managing, something as thorough as MySQL Workbench is unnecessary, slow, and ugly. I wanted to make a database manager that has a quicker boot, faster queries for small data management, nicer styling, no restrictions on operations, and integrated GPT support.
+
+## features
+
+* Connects to local or remote MySQL or PostgreSQL databases
+* Stores login information to provide quicker access to last used connection
+* Dynamic tree view for databases and tables
+* Runs "USE" and "SELECT * FROM" queries by clicking on database or table name, respectively
+* SQL editor with text hightlighting
+* Successful queries display results in table view or response message, failed queries return error message to support debugging
+* GPT support to query databases in plain english
+* (What I consider) a nicely styled interface, making it easy to understand the data displayed
