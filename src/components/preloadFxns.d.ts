@@ -11,7 +11,7 @@ export interface IPostgreAPI {
 }
 
 export interface IGPTAPI {
-    gptAPI: {makeRequest: (database_info: string, request: string, openAIKey: any) => Number | Object}, // i feel like this needs to be marked as async somehow
+    gptAPI: {makeRequest: (database_info: string, request: string, openAIKey: any) => {message: {content: string}}}, // i feel like this needs to be marked as async somehow
 }
 
 export interface IEditorAPI {

@@ -52,8 +52,8 @@ export default function Editor({
 
   async function executeGPT() {
     setTableResult("loading");
-    let tables = [];
-    let temp_dbs = {};
+    let tables: any = [];
+    let temp_dbs: { [key: string]: { [tableName: string]: any[] } } = {};
     try {
       temp_dbs = await window.mysql.dbTableAPI.getDbTableInfo();
       for (const key in temp_dbs) {
@@ -61,12 +61,12 @@ export default function Editor({
         if (tables !== "err") {
           temp_dbs[key] = {};
           for (const table in tables) {
-            const columns = await window.mysql.columnAPI.getColumnInfo(
-              tables[table]["Tables_in_" + key]
-            );
-            temp_dbs[key][tables[table]["Tables_in_" + key]] = [];
+            const tableName: string = tables[table]["Tables_in_" + key];
+            const columns =
+              await window.mysql.columnAPI.getColumnInfo(tableName);
+            temp_dbs[key][tableName] = [];
             for (const col in columns) {
-              temp_dbs[key][tables[table]["Tables_in_" + key]].push(
+              temp_dbs[key][tableName].push(
                 `${columns[col].Field} ${columns[col].Type}`
               );
             }
@@ -78,7 +78,7 @@ export default function Editor({
         currentQuery,
         openAIKey
       );
-      if (generatedQuery === -1) {
+      if (generatedQuery.message.content === "-1") {
         setTableResult("need_key");
       }
       setCurrentQuery(generatedQuery.message.content);

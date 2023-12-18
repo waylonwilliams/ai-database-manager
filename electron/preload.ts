@@ -135,7 +135,7 @@ contextBridge.exposeInMainWorld("gpt", {
       if (openAIKey !== null) {
         var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
       } else {
-        return -1;
+        return {message: {content: "-1"}};
       }
       try {
       const completion = await openai.chat.completions.create({
@@ -162,7 +162,7 @@ contextBridge.exposeInMainWorld("gpt", {
       return completion.choices[0];
     } catch (err) {
       console.log(err);
-      return -1;
+      return {message: {content: "-1"}};
     }
     },
   },
