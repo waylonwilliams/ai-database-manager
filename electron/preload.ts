@@ -1,14 +1,16 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
+import { Client } from "pg";
 import OpenAI from "openai";
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-sql';
+import { highlight, languages } from "prismjs/components/prism-core";
+import "prismjs/components/prism-sql";
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
+var postgreConnector: any = null;
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
@@ -70,7 +72,7 @@ contextBridge.exposeInMainWorld("mysql", {
                 }
                 resolve(post);
               }
-            },
+            }
           );
         } else {
           resolve({});
@@ -95,7 +97,7 @@ contextBridge.exposeInMainWorld("mysql", {
                 } else {
                   resolve(result);
                 }
-              },
+              }
             );
           }
         });
@@ -114,7 +116,7 @@ contextBridge.exposeInMainWorld("mysql", {
             } else {
               resolve(result);
             }
-          },
+          }
         );
       });
     },
@@ -122,9 +124,43 @@ contextBridge.exposeInMainWorld("mysql", {
 });
 
 contextBridge.exposeInMainWorld("postgre", {
+  connectAPI: {
+    connect(
+      host: string,
+      user: string,
+      database: string,
+      pass: string,
+      port: number
+    ) {
+      return new Promise(async (resolve) => {
+        try {
+          postgreConnector = new Client({
+            user: user,
+            host: host,
+            database: database,
+            password: pass,
+            port: port,
+          });
+          await postgreConnector.connect();
+          resolve(1);
+        } catch {
+          resolve(null);
+        }
+      });
+    },
+  },
   queryAPI: {
-    getMeow() {
-      return 4;
+    makeQuery(query: string) {
+      return new Promise((resolve) => {
+        postgreConnector.query(query, (err: Error, result: any) => {
+          if (err) {
+            console.log("Failed query to postgre", err);
+            resolve(null);
+          } else {
+            resolve(result);
+          }
+        });
+      });
     },
   },
 });
@@ -133,37 +169,45 @@ contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
     async makeRequest(database_info: string, request: string, openAIKey: any) {
       if (openAIKey !== null) {
-        var openai = new OpenAI({ apiKey: openAIKey, dangerouslyAllowBrowser: true });
+        var openai = new OpenAI({
+          apiKey: openAIKey,
+          dangerouslyAllowBrowser: true,
+        });
       } else {
-        return {message: {content: "-1"}};
+        return { message: { content: "-1" } };
       }
       try {
-      const completion = await openai.chat.completions.create({
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. The user will provide you with information about their MySQL connection including database names, table names, and column types.",
-          },
-          {
-            role: "user",
-            content: `Here is some information about the MySQL connection: ${
-              database_info.slice(0, 4076)}`, // limits it to 4076 characters includes preface, preventing going over character limit, ideally let this cleanly go into another prompt
-          },
-          { role: "assistant", content: "" },
-          {
-            role: "user",
-            content: `Using the database information previously given, write a MySQL query that satisfies this request, respond solely with the query: ${request.slice(0, 4066)}`, // just for antibugging
-          },
-        ],
-        model: "gpt-3.5-turbo",
-      });
-      console.log(completion.choices[0].message.content);
-      return completion.choices[0];
-    } catch (err) {
-      console.log(err);
-      return {message: {content: "-1"}};
-    }
+        const completion = await openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. The user will provide you with information about their MySQL connection including database names, table names, and column types.",
+            },
+            {
+              role: "user",
+              content: `Here is some information about the MySQL connection: ${database_info.slice(
+                0,
+                4076
+              )}`, // limits it to 4076 characters includes preface, preventing going over character limit, ideally let this cleanly go into another prompt
+            },
+            { role: "assistant", content: "" },
+            {
+              role: "user",
+              content: `Using the database information previously given, write a MySQL query that satisfies this request, respond solely with the query: ${request.slice(
+                0,
+                4066
+              )}`, // just for antibugging
+            },
+          ],
+          model: "gpt-3.5-turbo",
+        });
+        console.log(completion.choices[0].message.content);
+        return completion.choices[0];
+      } catch (err) {
+        console.log(err);
+        return { message: { content: "-1" } };
+      }
     },
   },
 });
@@ -176,8 +220,7 @@ contextBridge.exposeInMainWorld("editor", {
       return h;
     },
   },
-})
-
+});
 
 // -----------------------------------------------------------------
 
@@ -202,7 +245,7 @@ function withPrototype(obj: Record<string, any>) {
 
 // --------- Preload scripts loading ---------
 function domReady(
-  condition: DocumentReadyState[] = ["complete", "interactive"],
+  condition: DocumentReadyState[] = ["complete", "interactive"]
 ) {
   return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
