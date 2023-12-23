@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
-import { Client } from "pg";
+// import { Client } from "pg";
 import OpenAI from "openai";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-sql";
@@ -10,7 +10,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 
 // -----------------------------------------------------------------
 var mysqlConnector: any = null;
-var postgreConnector: any = null;
+// var postgreConnector: any = null;
 
 contextBridge.exposeInMainWorld("mysql", {
   connectAPI: {
@@ -123,47 +123,47 @@ contextBridge.exposeInMainWorld("mysql", {
   },
 });
 
-contextBridge.exposeInMainWorld("postgre", {
-  connectAPI: {
-    connect(
-      host: string,
-      user: string,
-      database: string,
-      pass: string,
-      port: number
-    ) {
-      return new Promise(async (resolve) => {
-        try {
-          postgreConnector = new Client({
-            user: user,
-            host: host,
-            database: database,
-            password: pass,
-            port: port,
-          });
-          await postgreConnector.connect();
-          resolve(1);
-        } catch {
-          resolve(null);
-        }
-      });
-    },
-  },
-  queryAPI: {
-    makeQuery(query: string) {
-      return new Promise((resolve) => {
-        postgreConnector.query(query, (err: Error, result: any) => {
-          if (err) {
-            console.log("Failed query to postgre", err);
-            resolve(null);
-          } else {
-            resolve(result);
-          }
-        });
-      });
-    },
-  },
-});
+// contextBridge.exposeInMainWorld("postgre", {
+//   pconnectAPI: {
+//     pconnect(
+//       host: string,
+//       user: string,
+//       database: string,
+//       pass: string,
+//       port: number
+//     ) {
+//       return new Promise(async (resolve) => {
+//         try {
+//           postgreConnector = new Client({
+//             user: user,
+//             host: host,
+//             database: database,
+//             password: pass,
+//             port: port,
+//           });
+//           await postgreConnector.connect();
+//           resolve(1);
+//         } catch {
+//           resolve(null);
+//         }
+//       });
+//     },
+//   },
+//   pqueryAPI: {
+//     pmakeQuery(query: string) {
+//       return new Promise((resolve) => {
+//         postgreConnector.query(query, (err: Error, result: any) => {
+//           if (err) {
+//             console.log("Failed query to postgre", err);
+//             resolve(null);
+//           } else {
+//             resolve(result);
+//           }
+//         });
+//       });
+//     },
+//   },
+// });
 
 contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
