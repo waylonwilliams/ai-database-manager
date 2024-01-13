@@ -53,7 +53,7 @@ export default function Table({ tableResult, openAIKey, setOpenAIKey }: Props) {
     return (
       <div className="table-container">
         <div className="loading-container">
-          <img className="loading-img" src="../../files/loading.png" />
+          <img className="loading-img" src="../files/loading.png" />
         </div>
       </div>
     );

@@ -33,6 +33,10 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
         storedUser === null ||
         storedDB === null
       ) {
+        console.log(
+          "Something in local storage was null so its not loading properly"
+        );
+        setLoading(false);
         return;
       }
       const result = await window.mysql.connectAPI.connect(
@@ -93,17 +97,17 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
           <div className={`toggle-btn ${!toggle ? "left-select" : ""}`}></div>
           <div className="selection-container">
             <div className="image-container">
-              <img src="../../files/mysql_deselect.png" />
+              <img src="../files/mysql_deselect.png" />
               <img
                 className={`${!toggle ? "deselect" : "selected"} second-image`}
-                src="../../files/mysql_select.png"
+                src="../files/mysql_select.png"
               />
             </div>
             <div className="image-container">
-              <img src="../../files/postgre_select.png" />
+              <img src="../files/postgre_select.png" />
               <img
                 className={`${!toggle ? "deselect" : "selected"} second-image`}
-                src="../../files/postgre_deselect.png"
+                src="../files/postgre_deselect.png"
               />
             </div>
           </div>
