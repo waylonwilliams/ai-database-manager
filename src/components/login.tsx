@@ -96,11 +96,12 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
         >
           <div className={`toggle-btn ${!toggle ? "left-select" : ""}`}></div>
           <div className="selection-container">
+            {/* all image routes are very off */}
             <div className="image-container">
-              <img src="../files/mysql_deselect.png" />
+              <img src="./images/mysql_deselect.png" />
               <img
                 className={`${!toggle ? "deselect" : "selected"} second-image`}
-                src="../files/mysql_select.png"
+                src="../dist-electron/files/mysql_select.png"
               />
             </div>
             <div className="image-container">
