@@ -8,7 +8,6 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   return (
     <>
-      HERE?
       {MySQLLogin === false && (
         <Login
           SetMySQLLogin={SetMySQLLogin}

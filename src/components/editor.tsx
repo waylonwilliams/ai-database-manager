@@ -78,8 +78,14 @@ export default function Editor({
         currentQuery,
         openAIKey
       );
+      console.log(generatedQuery);
+      console.log(generatedQuery.message.content);
       if (generatedQuery.message.content === "-1") {
+        console.log(
+          "here, i should just break after this so false query isn't executed"
+        );
         setTableResult("need_key");
+        return;
       }
       setCurrentQuery(generatedQuery.message.content);
       const result = await window.mysql.queryAPI.makeQuery(
