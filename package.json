@@ -27,14 +27,12 @@
   "author": "Waylon Williams wowillia@ucsc.edu",
   "dependencies": {
     "@electron/remote": "^2.1.1",
-    "@types/pg": "^8.10.9",
     "mysql2": "^3.6.5",
     "npm": "^10.2.5",
     "openai": "^4.20.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-simple-code-editor": "^0.13.1",
-    "typeorm": "^0.3.19",
     "vite-tsconfig-paths": "^4.2.1"
   },
   "devDependencies": {
@@ -51,7 +49,6 @@
     "eslint": "^8.48.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "pg": "^8.11.3",
     "prettier": "^3.1.0",
     "prismjs": "^1.29.0",
     "typescript": "^5.2.2",
