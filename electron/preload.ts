@@ -3,6 +3,7 @@ import * as mysql from "mysql2";
 import OpenAI from "openai";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-sql";
+import path from "node:path";
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
@@ -172,6 +173,15 @@ contextBridge.exposeInMainWorld("editor", {
     makeHighlight(code: any) {
       const h = highlight(code, languages.sql);
       return h;
+    },
+  },
+});
+
+// this should give me the universal path to the images?
+contextBridge.exposeInMainWorld("image_path", {
+  find_path: {
+    get_image_path(image: string) {
+      return path.join(__dirname, image);
     },
   },
 });
