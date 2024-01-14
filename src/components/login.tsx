@@ -98,21 +98,17 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
           <div className="selection-container">
             {/* all image routes are very off */}
             <div className="image-container">
-              <img
-                src={window.image_path.find_path.get_image_path(
-                  "../images/mysql_deselect.png"
-                )}
-              />
+              <img src="./images/mysql_deselect.png" />
               <img
                 className={`${!toggle ? "deselect" : "selected"} second-image`}
-                src="/assets/images/mysql_select.png"
+                src="./images/mysql_select.png"
               />
             </div>
             <div className="image-container">
-              <img src="file:///images/postgre_select.png" />
+              <img src="./images/postgre_select.png" />
               <img
                 className={`${!toggle ? "deselect" : "selected"} second-image`}
-                src="file:///images/postgre_deselect.png"
+                src="./images/postgre_deselect.png"
               />
             </div>
           </div>

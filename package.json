@@ -8,15 +8,6 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "build": {
-    "directories": {
-      "buildResources": "build",  
-      "output": "release"
-    },
-    "extraResources": [
-      "./images/**/*"
-    ]
-  },
   "description": "An AI assisted database management application.",
   "author": "Waylon Williams wowillia@ucsc.edu",
   "dependencies": {
