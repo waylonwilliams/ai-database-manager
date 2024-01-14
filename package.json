@@ -4,9 +4,23 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder -c.mac.identity=null --config.icon=public/static/build/icon.png",
+    "build": "tsc && vite build && electron-builder -mwl -c.mac.identity=null",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+  },
+  "build": {
+    "mac": {
+      "icon": "public/static/build/icon.png"
+    },
+    "win": {
+      "icon": "public/static/build/icon.ico"
+    },
+    "linux": {
+      "icon": "public/static/build/icon.png"
+    },
+    "directories": {
+      "output": "release"
+    }
   },
   "description": "An AI assisted database management application.",
   "author": "Waylon Williams wowillia@ucsc.edu",
