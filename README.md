@@ -8,7 +8,7 @@ I was previously using MySQL workbench for managing databases used in my project
 
 ## features
 
-* Connects to local or remote MySQL or PostgreSQL databases
+* Connects to local or remote MySQL databases
 * Stores login information locally to provide quicker access to the last used connection
 * Dynamic tree view for databases and tables
 * Runs "USE" and "SELECT * FROM" queries by clicking on a database or table name, respectively
