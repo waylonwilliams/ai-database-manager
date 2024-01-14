@@ -8,10 +8,10 @@ interface Props {
 }
 
 export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
-  const [host, setHost] = useState("localhost");
-  const [user, setUser] = useState("root");
-  const [pass, setPass] = useState("hahahddd%55^jjd9");
-  const [port, setPort] = useState("3306");
+  const [host, setHost] = useState("");
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const [port, setPort] = useState("");
   const [toggle, setToggle] = useState(false); // left side (mysql)
   const [failed, setFailed] = useState<boolean>(false);
 

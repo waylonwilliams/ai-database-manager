@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder -mwl -c.mac.identity=null",
+    "build": "tsc && vite build && electron-builder -l -c.mac.identity=null",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "build": {
+    "productName": "DB Manager",
     "mac": {
       "icon": "public/static/build/icon.png"
     },
@@ -19,7 +20,7 @@
       "icon": "public/static/build/icon.png"
     },
     "directories": {
-      "output": "release"
+      "output": "release/linux"
     }
   },
   "description": "An AI assisted database management application.",
@@ -33,9 +34,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-simple-code-editor": "^0.13.1",
+    "typeorm": "^0.3.19",
     "vite-tsconfig-paths": "^4.2.1"
   },
   "devDependencies": {
+    "@electron/rebuild": "^3.5.0",
     "@types/node": "^20.10.3",
     "@types/prismjs": "^1.26.3",
     "@types/react": "^18.2.21",
