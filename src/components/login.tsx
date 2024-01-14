@@ -12,7 +12,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [port, setPort] = useState("");
-  const [toggle, setToggle] = useState(false); // left side (mysql)
+  // const [toggle, setToggle] = useState(false); // left side (mysql)
   const [failed, setFailed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
     localStorage.setItem("user", user);
     localStorage.setItem("pass", pass);
     localStorage.setItem("port", port);
-    localStorage.setItem("db", toggle.toString());
 
     const result = await window.mysql.connectAPI.connect(
       host,
@@ -75,28 +74,30 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
     }
   }
 
-  function changeImages() {
-    if (toggle === false) {
-      setToggle(true);
-      // handle true toggle things here
-    } else {
-      setToggle(false);
-      // handle false toggle thigns here
-    }
-  }
+  // function changeImages() {
+  //   if (toggle === false) {
+  //     setToggle(true);
+  //     // handle true toggle things here
+  //   } else {
+  //     setToggle(false);
+  //     // handle false toggle thigns here
+  //   }
+  // }
+
   if (loading) {
     return <></>;
   }
   return (
     <div className="container">
       <div className="login-div">
+        {/* 
+        IMAGE TOGGLE SWITCH
         <div
           className={toggle ? "toggle-container" : "toggle-container postgre"}
           onClick={changeImages}
         >
           <div className={`toggle-btn ${!toggle ? "left-select" : ""}`}></div>
           <div className="selection-container">
-            {/* all image routes are very off */}
             <div className="image-container">
               <img src="./static/images/mysql_deselect.png" />
               <img
@@ -112,7 +113,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         <br />
         <input
           type="text"
