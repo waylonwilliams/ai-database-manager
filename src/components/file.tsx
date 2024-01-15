@@ -27,7 +27,9 @@ export default function Selector({
     const curTable = e.currentTarget.innerHTML;
     setSelectedDB(curDB);
     let result = await window.mysql.queryAPI.makeQuery("USE " + curDB);
-    result = await window.mysql.queryAPI.makeQuery("SELECT * FROM " + curTable);
+    result = await window.mysql.queryAPI.makeQuery(
+      "SELECT * FROM " + curTable + " LIMIT 1000"
+    );
     if (Array.isArray(result)) {
       let i = 1;
       for (let element of result) {

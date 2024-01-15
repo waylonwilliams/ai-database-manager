@@ -25,13 +25,11 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
       const storedUser = localStorage.getItem("user");
       const storedPass = localStorage.getItem("pass");
       const storedPort = localStorage.getItem("port");
-      const storedDB = localStorage.getItem("db");
       if (
         storedHost === null ||
         storedPass === null ||
         storedPort === null ||
-        storedUser === null ||
-        storedDB === null
+        storedUser === null
       ) {
         console.log(
           "Something in local storage was null so its not loading properly"
@@ -89,6 +87,7 @@ export default function Login({ SetMySQLLogin, loading, setLoading }: Props) {
   }
   return (
     <div className="container">
+      <div className="login-title">MySQL Manager</div>
       <div className="login-div">
         {/* 
         IMAGE TOGGLE SWITCH
