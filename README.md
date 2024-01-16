@@ -19,7 +19,7 @@ I was previously using MySQL workbench for managing databases used in my project
 
 ## how to use
 
-View the releases tab on the side of this repo to download the distributable for your system
+View the [releases](https://github.com/waylonwilliams/ai-database-manager/releases) tab on the side of this repo to download the distributable for your system
 
 Alternatively, you can clone this repo and run the app locally by running the following commands
 
