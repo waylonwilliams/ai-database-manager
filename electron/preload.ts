@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 import * as mysql from "mysql2";
 import OpenAI from "openai";
+import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-sql";
 
@@ -121,6 +122,55 @@ contextBridge.exposeInMainWorld("mysql", {
   },
 });
 
+// contextBridge.exposeInMainWorld("gpt", {
+//   gptAPI: {
+//     async makeRequest(database_info: string, request: string, openAIKey: any) {
+//       if (openAIKey !== null) {
+//         var openai = new OpenAI({
+//           apiKey: openAIKey,
+//           dangerouslyAllowBrowser: true,
+//         });
+//       } else {
+//         return { message: { content: "-1" } };
+//       }
+//       try {
+//         let m : ChatCompletionMessageParam[] = [];
+//         m.push({
+//           role: "system",
+//           content:
+//             "You are an assistant that writes MySQL queries for users on a database management system. Respond only with the MySQL query the user requests. The user will provide you with information about their MySQL connection including database names, table names, and column types.",
+//         })
+//         console.log(database_info);
+//         let i = 0;
+//         while (i < database_info.length) {
+//           m.push({
+//             role: "user",
+//             content:
+//             database_info.slice(i, i+4000),
+//           });
+//           i += 4000;
+//         }
+//         m.push({
+//           role: "user",
+//           content: `Using the database information previously given, write a MySQL query that satisfies this request, respond solely with the plain text query: ${request.slice(
+//             0,
+//             4066
+//           )}`
+//         });
+//         console.log(m);
+//         const completion = await openai.chat.completions.create({
+//           messages: m,
+//           model: "gpt-3.5-turbo",
+//         });
+//         console.log(completion);
+//         return completion.choices[0];
+//       } catch (err) {
+//         console.log(err);
+//         return { message: { content: "-1" } };
+//       }
+//     },
+//   },
+// });
 contextBridge.exposeInMainWorld("gpt", {
   gptAPI: {
     async makeRequest(database_info: string, request: string, openAIKey: any) {
