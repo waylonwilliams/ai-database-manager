@@ -1,4 +1,4 @@
-# min_mysql
+# AI Database Manager
 
 https://github.com/waylonwilliams/min_mysql/assets/145303505/d008d7d8-bb87-48e0-aa6a-e35a813e0c65
 
