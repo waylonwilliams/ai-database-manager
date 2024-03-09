@@ -2,11 +2,11 @@
 
 https://github.com/waylonwilliams/min_mysql/assets/145303505/d008d7d8-bb87-48e0-aa6a-e35a813e0c65
 
-## motivation
+## Motivation
 
 I was previously using MySQL workbench for managing databases used in my projects. However, for the relatively small amount of data and tables I am managing, something as thorough as MySQL Workbench is unnecessary, slow, and ugly. I wanted to make a database manager that has a quicker boot, faster queries for small data management, nicer styling, no restrictions on operations, and integrated GPT support.
 
-## features
+## Features
 
 * Connects to local or remote MySQL databases
 * Stores login information locally to provide quicker access to the last used connection
@@ -17,15 +17,15 @@ I was previously using MySQL workbench for managing databases used in my project
 * GPT support for querying databases in plain English
 * (What I consider) a nicely styled interface, making it easy to understand the displayed data
 
-## how to use
+## How to use
 
 View the [releases](https://github.com/waylonwilliams/ai-database-manager/releases) tab on the side of this repo to download the distributable for your system
 
 Alternatively, you can clone this repo and run the app locally by running the following commands
 
 ```
-git clone https://github.com/waylonwilliams/min_mysql.git
-cd min_mysql
+git clone https://github.com/waylonwilliams/ai-database-manager.git
+cd ai-database-manager
 npm install
 npm run dev
 ```
