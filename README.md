@@ -1,6 +1,8 @@
 # AI Database Manager
 
-https://github.com/waylonwilliams/min_mysql/assets/145303505/d008d7d8-bb87-48e0-aa6a-e35a813e0c65
+
+https://github.com/waylonwilliams/ai-database-manager/assets/145303505/454f6589-8bbe-4964-977f-ec708b475c04
+
 
 ## Motivation
 
